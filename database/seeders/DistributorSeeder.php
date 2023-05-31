@@ -13,17 +13,37 @@ class DistributorSeeder extends Seeder
      */
     public function run(): void
     {
-        $file = fopen('database\seeders\csvfiles\distributors_founding_dates.csv', 'r');
-        $data = fgetcsv($file);
-
-        while (($data = fgetcsv($file)) !== false) {
-            Distributor::create([
-                'name' => $data[0],
-                'founded_at' => $data[1] != ' NULL' ? $data[1] : null,
-                'description' => '',
-            ]);
+        $distributorsDates = [];
+        $file = fopen(database_path('seeders/csvfiles/distributors_founding_dates.csv'), 'r');
+        fgetcsv($file); // Skip the first row (header)
+        while (($data = fgetcsv($file)) !== FALSE) {
+            $distributorsDates[$data[0]] = $data[1];
         }
+        fclose($file);
+    
+        $file = fopen(database_path('seeders/csvfiles/merged_steam_data.csv'), 'r');
+        fgetcsv($file); // Skip the first row (header)
+        while (($data = fgetcsv($file)) !== FALSE) {
+            $distributorNames = explode(", ", $data[5]); // Split the distributors string into an array
 
+            foreach ($distributorNames as $distributorName) {
+                $distributorFoundingDate = array_key_exists($distributorName, $distributorsDates) 
+                    ? ($distributorsDates[$distributorName] !== 'NULL' ? $distributorsDates[$distributorName] : null)
+                    : null;
+                
+                // Check if a distributor with the same name already exists
+                if (!Distributor::where('name', $distributorName)->exists()) {
+                    // Now you can create the Distributor
+                    Distributor::create([
+                        'name' => $distributorName,
+                        'founded_at' => $distributorFoundingDate,
+                        'description' => '',
+                    ]);
+                }
+            }
+        }
         fclose($file);
     }
+    
+    
 }

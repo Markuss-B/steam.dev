@@ -20,8 +20,12 @@ class GameSeeder extends Seeder
         $data = fgetcsv($file);
 
         while (($data = fgetcsv($file)) !== false) {
-            $developer = Developer::where('name', $data[4])->first();
-            $distributor = Distributor::where('name', $data[5])->first();
+            // explode the developers and distributors strings into arrays
+            $data[4] = explode(", ", $data[4]);
+            $data[5] = explode(", ", $data[5]);
+
+            $developer = Developer::where('name', $data[4][0])->first();
+            $distributor = Distributor::where('name', $data[5][0])->first();
             $date = json_decode($data[3], true);
             if (isset($date['date'])) {
                 $date = $date['date'];
