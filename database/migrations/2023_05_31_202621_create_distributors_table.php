@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('distributors', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->date('founded_at');
-            $table->string('description');
+            $table->date('founded_at')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

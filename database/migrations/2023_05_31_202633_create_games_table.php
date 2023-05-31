@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->string('description');
+            $table->string('description', 1000)->nullable();
             $table->string('price');
             $table->string('discount');
-            $table->date('release_date');
+            $table->date('release_date')->nullable();
             $table->foreignId('developer_id')->constrained();
-            $table->foreignId('distributor_id')->constrained();
+            $table->foreignId('distributor_id')->nullable()->constrained();
             $table->timestamps();
         });
     }
