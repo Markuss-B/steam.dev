@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('description', 1000)->nullable();
-            $table->string('price');
-            $table->string('discount');
+            $table->integer('price');
+            $table->integer('discount');
             $table->date('release_date')->nullable();
-            $table->foreignId('developer_id')->constrained();
-            $table->foreignId('distributor_id')->nullable()->constrained();
             $table->timestamps();
+            $table->foreignId('developer_id')->nullable()->constrained('developers');
         });
     }
 
