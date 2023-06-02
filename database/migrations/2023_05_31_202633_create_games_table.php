@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('discount');
             $table->date('release_date')->nullable();
             $table->timestamps();
-            $table->foreignId('developer_id')->nullable()->constrained('developers');
         });
     }
 

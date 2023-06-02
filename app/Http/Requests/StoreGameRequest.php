@@ -11,7 +11,7 @@ class StoreGameRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class StoreGameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'price' => 'required|integer|min:0',
+            'discount' => 'required|integer|min:0|max:100',
+            'release_date' => 'nullable|date',
+            'developers' => 'required|array',
+            'developers.*' => 'required|integer|exists:developers,id',
+            'publishers' => 'required|array',
+            'publishers.*' => 'required|integer|exists:publishers,id',
         ];
     }
 }
