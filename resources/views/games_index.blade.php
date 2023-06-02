@@ -8,12 +8,35 @@
 </head>
 <body>
     <h1>Games</h1>
-    <ul>
-        @foreach ($games as $game)
-            <li>
-                {{ $game->name }}
-            </li>
-        @endforeach
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Release Date</th>
+                <th>Developer</th>
+                <th>Publisher</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($games as $game)
+                <tr>
+                    <td>{{ $game->name }}</td>
+                    <td>€{{ $game->price / 100 }}</td>
+                    <td>{{ $game->discount }}%</td>
+                    <td>{{ $game->release_date }}</td>
+                    <td>
+                        @foreach ($game->developers as $developer)
+                            {{ $developer->name }}@if (!$loop->last), @endif
+                        @endforeach
+                    </td>
+                    <td>
+                        @foreach ($game->publishers as $publisher)
+                            {{ $publisher->name }}
+                        @endforeach
+                    </td>
+                </tr>
+            @endforeach
 </body>
 </html>
