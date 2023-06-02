@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Distributor;
-use App\Http\Requests\StoreDistributorRequest;
-use App\Http\Requests\UpdateDistributorRequest;
+use App\Models\Publisher;
+use App\Http\Requests\StorePublisherRequest;
+use App\Http\Requests\UpdatePublisherRequest;
 
-class DistributorController extends Controller
+class PublisherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class DistributorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDistributorRequest $request)
+    public function store(StorePublisherRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class DistributorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Distributor $distributor)
+    public function show(Publisher $publisher)
     {
         //
     }
@@ -43,7 +43,7 @@ class DistributorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Distributor $distributor)
+    public function edit(Publisher $publisher)
     {
         //
     }
@@ -51,7 +51,7 @@ class DistributorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDistributorRequest $request, Distributor $distributor)
+    public function update(UpdatePublisherRequest $request, Publisher $publisher)
     {
         //
     }
@@ -59,7 +59,7 @@ class DistributorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Distributor $distributor)
+    public function destroy(Publisher $publisher)
     {
         //
     }

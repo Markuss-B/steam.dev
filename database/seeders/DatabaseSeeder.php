@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Game;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,8 +23,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             DeveloperSeeder::class,
-            DistributorSeeder::class,
+            PublisherSeeder::class,
             GameSeeder::class,
+            GameDevelopersSeeder::class,
+            GamePublishersSeeder::class,
         ]);
     }
 }

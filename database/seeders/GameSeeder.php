@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Developer;
-use App\Models\Distributor;
+use App\Models\Publisher;
 use App\Models\Game;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,35 +16,19 @@ class GameSeeder extends Seeder
      */
     public function run(): void
     {
-        $file = fopen('database\seeders\csvfiles\merged_steam_data.csv', 'r');
+        $file = fopen('database\seeders\csvfiles\games.csv', 'r');
         $data = fgetcsv($file);
 
         while (($data = fgetcsv($file)) !== false) {
-            // explode the developers and distributors strings into arrays
-            $data[4] = explode(", ", $data[4]);
-            $data[5] = explode(", ", $data[5]);
-
-            $developer = Developer::where('name', $data[4][0])->first();
-            $distributor = Distributor::where('name', $data[5][0])->first();
-            $date = json_decode($data[3], true);
-            if (isset($date['date'])) {
-                $date = $date['date'];
-                $date = Carbon::createFromFormat('j M, Y', $date);
-            } else {
-                $date = null;
-            }
-            
             Game::create([
-                'name' => $data[1],
-                'description' => $data[2],
-                'price' => $data[6],
-                'discount' => $data[7],
-                'release_date' => $date,
-                'developer_id' => $developer->id,
-                'distributor_id' => $distributor->id,
+                'name' => $data[0],
+                'description' => $data[4],
+                'price' => $data[2],
+                'discount' => $data[3],
+                'release_date' => ($data[1] === 'NULL' || $data[1] === '') ? null : $data[1], // Convert 'NULL' to null (nullable date
             ]);
         }
-
-        fclose($file);
     }
 }
+
+
