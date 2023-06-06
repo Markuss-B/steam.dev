@@ -29,4 +29,9 @@ class Game extends Model
     {
         return $this->belongsToMany(Publisher::class);
     }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
