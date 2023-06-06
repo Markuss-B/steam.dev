@@ -11,7 +11,7 @@ class StoreDeveloperRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreDeveloperRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'founded_at' => 'nullable|date|before:+1 day',
+            'description' => 'nullable|string|max:1000',
         ];
     }
 }

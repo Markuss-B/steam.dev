@@ -13,7 +13,9 @@ class DeveloperController extends Controller
      */
     public function index()
     {
-        //
+        // Get all developers from the database
+        $developers = Developer::all();
+        return view('developers.index', compact('developers'));
     }
 
     /**
@@ -21,7 +23,8 @@ class DeveloperController extends Controller
      */
     public function create()
     {
-        //
+        // show the create form
+        return view('developers.create');
     }
 
     /**
@@ -29,7 +32,10 @@ class DeveloperController extends Controller
      */
     public function store(StoreDeveloperRequest $request)
     {
-        //
+        // Store the developer
+        $developer = Developer::create($request->validated());
+
+        return redirect()->route('developers.show', ['developer' => $developer->id]);
     }
 
     /**
@@ -37,7 +43,8 @@ class DeveloperController extends Controller
      */
     public function show(Developer $developer)
     {
-        //
+        // show the developer
+        return view('developers.show', compact('developer'));
     }
 
     /**
@@ -45,7 +52,8 @@ class DeveloperController extends Controller
      */
     public function edit(Developer $developer)
     {
-        //
+        // show the edit form
+        return view('developers.edit', compact('developer'));
     }
 
     /**
@@ -53,7 +61,10 @@ class DeveloperController extends Controller
      */
     public function update(UpdateDeveloperRequest $request, Developer $developer)
     {
-        //
+        // Update the developer
+        $developer->update($request->validated());
+
+        return redirect()->route('developers.show', ['developer' => $developer->id]);
     }
 
     /**
@@ -61,6 +72,9 @@ class DeveloperController extends Controller
      */
     public function destroy(Developer $developer)
     {
-        //
+        // Delete the developer
+        $developer->delete();
+
+        return redirect()->route('developers.index');
     }
 }
