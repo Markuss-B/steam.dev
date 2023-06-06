@@ -12,19 +12,35 @@
         @csrf
         <div>
             <label for="name">Name</label>
-            <input type="text" name="name">
+            <input id="name" type="text" name="name" value="{{ old('name') }}"
+            class="@error('name') is-invalid @enderror">
+            @error('name')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
         <div>
             <label for="price">Price</label>
-            <input type="number" name="price">
+            <input id="price" type="number" name="price" value="{{ old('price') }}"
+            class="@error('price') is-invalid @enderror">
+            @error('price')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
         <div>
             <label for="discount">Discount</label>
-            <input type="number" name="discount">
+            <input id="discount" type="number" name="discount" value="{{ old('discount') }}"
+            class="@error('discount') is-invalid @enderror">
+            @error('discount')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
         <div>
             <label for="release_date">Release Date</label>
-            <input type="date" name="release_date">
+            <input id="release_date" type="date" name="release_date" value="{{ old('release_date') }}"
+            class="@error('release_date') is-invalid @enderror">
+            @error('release_date')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
         <div>
             <label for="developers">Developers</label>

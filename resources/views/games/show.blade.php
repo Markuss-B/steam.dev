@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>{{ $game->name }}</h1>
+    <a href="{{ route('games.index') }}">Back to games</a>
     {{-- edit game --}}
     <a href="{{ route('games.edit', ['game' => $game->id]) }}">Edit</a>
     {{-- delete game --}}
