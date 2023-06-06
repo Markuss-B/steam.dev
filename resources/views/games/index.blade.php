@@ -36,7 +36,8 @@
                     <td>{{ $game->release_date }}</td>
                     <td>
                         @foreach ($game->developers as $developer)
-                            {{ $developer->name }}@if (!$loop->last), @endif
+                            <a href="{{ route('developers.show', ['developer' => $developer->id]) }}">
+                                {{ $developer->name }}</a>@if (!$loop->last), @endif
                         @endforeach
                     </td>
                     <td>

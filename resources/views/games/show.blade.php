@@ -22,7 +22,8 @@
     <p>Release Date: {{ $game->release_date }}</p>
     <p>Developers:
         @foreach ($game->developers as $developer)
-            {{ $developer->name }}@if (!$loop->last), @endif
+            <a href="{{ route('developers.show', ['developer' => $developer->id]) }}">
+                {{ $developer->name }}</a>@if (!$loop->last), @endif
         @endforeach
     </p>
     <p>Publishers:
