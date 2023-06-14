@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Developer;
 use App\Models\Publisher;
+use App\Models\Tag;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use Illuminate\Contracts\View\View;
@@ -66,7 +67,8 @@ class GameController extends Controller
         // show the edit form
         $developers = Developer::orderBy('name')->get();
         $publishers = Publisher::orderBy('name')->get();
-        return view('games.edit', compact('game', 'developers', 'publishers'));
+        $tags = Tag::orderBy('name')->get();
+        return view('games.edit', compact('game', 'developers', 'publishers', 'tags'));
     }
 
     /**
@@ -82,6 +84,9 @@ class GameController extends Controller
 
         // Update the publishers
         $game->publishers()->sync($request->input('publishers'));
+
+        // Update the tags
+        $game->tags()->sync($request->input('tags'));
 
         return redirect()->route('games.show', ['game' => $game->id]);
     }

@@ -71,6 +71,20 @@
                 @endforeach
             </select>
         </div>
+        <div>
+            <label for="tags">Tags</label>
+            <select name="tags[]" multiple>
+                @foreach ($tags as $tag)
+                    <option value="{{ $tag->id }}"
+                        @if ($game->tags->contains($tag->id))
+                            selected
+                        @endif
+                    >
+                        {{ $tag->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
         <button type="submit">Save</button>
     </form>
 </body>
