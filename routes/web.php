@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\DeveloperController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,13 @@ Route::get('/developers/{developer}/edit', [DeveloperController::class, 'edit'])
 Route::put('/developers/{developer}/update', [DeveloperController::class, 'update'])->name('developers.update');
 Route::delete('/developers/{developer}/destroy', [DeveloperController::class, 'destroy'])->name('developers.destroy');
 
-// Publishers
+// Tags
+Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+Route::get('/tags/create', [TagController::class, 'create'])->name('tags.create');
+Route::post('/tags/store', [TagController::class, 'store'])->name('tags.store');
+Route::get('/tags/{tag}', [TagController::class, 'show'])->name('tags.show');
+Route::get('/tags/{tag}/edit', [TagController::class, 'edit'])->name('tags.edit');
+Route::put('/tags/{tag}/update', [TagController::class, 'update'])->name('tags.update');
+Route::delete('/tags/{tag}/destroy', [TagController::class, 'destroy'])->name('tags.destroy');
+
+

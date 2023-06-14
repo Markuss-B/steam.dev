@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use App\Models\Tag;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,15 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+
+        // Custom binding for Tag model
+        Route::bind('tag', function ($value) {
+            if (is_numeric($value)) {
+                return Tag::findOrFail($value);
+            }
+
+            return Tag::where('name', $value)->firstOrFail();
         });
 
         $this->routes(function () {

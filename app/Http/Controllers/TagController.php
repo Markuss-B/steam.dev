@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use App\Models\Game;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
+
 
 class TagController extends Controller
 {
@@ -14,6 +17,8 @@ class TagController extends Controller
     public function index()
     {
         //
+        $tags = Tag::all();
+        return view('tags.index', compact('tags'));
     }
 
     /**
@@ -21,7 +26,8 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        // create a tag
+        return view('tags.create');
     }
 
     /**
@@ -29,7 +35,10 @@ class TagController extends Controller
      */
     public function store(StoreTagRequest $request)
     {
-        //
+        // store a tag
+        $tag = Tag::create($request->validated());
+
+        return redirect()->route('tags.show', ['tag' => $tag->id]);
     }
 
     /**
@@ -37,7 +46,8 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        // show a tag
+        return view('tags.show', compact('tag'));
     }
 
     /**
@@ -45,7 +55,9 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
+        // edit a tag
+        $games = Game::all();
+        return view('tags.edit', compact('tag', 'games'));
     }
 
     /**
@@ -53,7 +65,10 @@ class TagController extends Controller
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
-        //
+        // update a tag
+        $tag->update($request->validated());
+
+        return redirect()->route('tags.show', ['tag' => $tag->id]);
     }
 
     /**
@@ -61,6 +76,9 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        // delete a tag
+        $tag->delete();
+
+        return redirect()->route('tags.index');
     }
 }

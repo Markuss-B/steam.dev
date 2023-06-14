@@ -11,7 +11,7 @@ class StoreTagRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,7 @@ class StoreTagRequest extends FormRequest
     {
         return [
             //
+            'name' => ['required', 'min:3', 'max:255']
         ];
     }
 }

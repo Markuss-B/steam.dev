@@ -31,5 +31,9 @@
             {{ $publisher->name }}@if (!$loop->last), @endif
         @endforeach
     </p>
+    <p>Tags:
+        @foreach ($game->tags as $tag)
+            {{ $tag->name }}@if (!$loop->last), @endif
+        @endforeach
 </body>
 </html>
