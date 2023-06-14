@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Games</title>
-</head>
-<body>
-    <h1>Games</h1>
+<x-layout title='Games' description="Pick a game! Any game!">
     {{-- create new game --}}
     <a href="{{ route('games.create') }}">Create new game</a>
     {{-- list of games --}}
@@ -56,5 +47,6 @@
                         </form>
                 </tr>
             @endforeach
-</body>
-</html>
+        </tbody>
+    </table>
+</x-layout>
