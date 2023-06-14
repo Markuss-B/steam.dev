@@ -13,15 +13,20 @@
         <li>Name: {{ $developer->name }}</li>
         <li>Foundation Date: {{ $developer->founded_at }}</li>
         <li>Games:
-            <ul>
-                @foreach ($developer->games as $game)
-                    <li>
-                        <a href="{{ route('games.show', $game->id) }}">
-                            {{ $game->name }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Game</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($developer->games as $game)
+                        <x-game-card :game="$game" />
+                    @endforeach
+                </tbody>
+            </table>
         </li>
     </ul>
 </body>
