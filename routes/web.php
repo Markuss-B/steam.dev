@@ -16,6 +16,11 @@ use App\Http\Controllers\TagController;
 |
 */
 
+// Home
+Route::get('/', function () {
+    return view('welcome-steam');
+})->name('home');
+
 // Games
 Route::get('/games', [GameController::class, 'index'])->name('games.index');
 Route::get('/games/create', [GameController::class, 'create'])->name('games.create');
