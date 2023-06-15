@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$game->name}}</title>
-</head>
-<body>
-    <h1>{{ $game->name }}</h1>
+<x-layout title="{{ $game->name }}">
     <a href="{{ route('games.index') }}">Back to games</a>
     {{-- edit game --}}
     <a href="{{ route('games.edit', ['game' => $game->id]) }}">Edit</a>
@@ -35,5 +26,5 @@
         @foreach ($game->tags as $tag)
             {{ $tag->name }}@if (!$loop->last), @endif
         @endforeach
-</body>
-</html>
+    </p>
+</x-layout>

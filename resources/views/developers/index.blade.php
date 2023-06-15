@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Developers</title>
-</head>
-<body>
-    <h1>Developers</h1>
+<x-layout title="Developers">
     <a href="{{ route('developers.create') }}">Create new developer</a>
     <table>
         <thead>
@@ -34,5 +25,5 @@
                 </tr>
             @endforeach
         </tbody>
-</body>
-</html>
+    </table>
+</x-layout>

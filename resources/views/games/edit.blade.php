@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $game->name }}</title>
-</head>
-<body>
-    <h1>Edit {{ $game->name }}</h1>
+<x-layout title="Edit {{ $game->name }}">
+    <a href="{{ route('games.index') }}">Back to games</a>
+    <a href="{{ route('games.show', ['game' => $game->id]) }}">Back to {{ $game->name }}</a>
     <form action="{{ route('games.update', ['game' => $game->id]) }}" method="POST">
         @csrf
         @method('PUT')
@@ -87,5 +80,4 @@
         </div>
         <button type="submit">Save</button>
     </form>
-</body>
-</html>
+</x-layout>

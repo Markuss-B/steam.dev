@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$tag->name}}</title>
-</head>
-<body>
-    <h1>{{ $tag->name }}</h1>
+<x-layout title="{{ $tag->name }}">
+    {{-- back to tags --}}
     <a href="{{ route('tags.index') }}">Back to tags</a>
     {{-- edit tag --}}
     <a href="{{ route('tags.edit', ['tag' => $tag->id]) }}">Edit</a>
@@ -32,5 +24,4 @@
             @endforeach
         </tbody>
     </table>
-</body>
-</html>
+</x-layout>

@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create new developer</title>
-</head>
-<body>
-    <h1>Create new developer</h1>
+<x-layout title="Create new developer">
     <form action="{{ route('developers.store') }}" method="POST">
         @csrf
         <div>
@@ -36,5 +27,4 @@
         <button type="submit">Create</button>
     </form>
     <a href="{{ route('developers.index') }}">Back to developers</a>
-</body>
-</html>
+</x-layout>

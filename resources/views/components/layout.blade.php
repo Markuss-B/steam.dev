@@ -18,5 +18,6 @@
     <footer>
         <hr />
         <a href="{{ route('home') }}">Admin home</a>
+    </footer>
 </body>
 </html>
