@@ -35,7 +35,7 @@ class DeveloperController extends Controller
         // Store the developer
         $developer = Developer::create($request->validated());
 
-        return redirect()->route('developers.show', ['developer' => $developer->id]);
+        return redirect()->route('developers.show', ['developer' => $developer->id])->with('success_message', 'Developer ' . $developer->name . ' successfully created.');
     }
 
     /**
@@ -64,7 +64,7 @@ class DeveloperController extends Controller
         // Update the developer
         $developer->update($request->validated());
 
-        return redirect()->route('developers.show', ['developer' => $developer->id]);
+        return redirect()->route('developers.show', ['developer' => $developer->id])->with('success_message', 'Developer ' . $developer->name . ' successfully updated.');
     }
 
     /**
@@ -75,6 +75,6 @@ class DeveloperController extends Controller
         // Delete the developer
         $developer->delete();
 
-        return redirect()->route('developers.index');
+        return redirect()->route('developers.index')->with('success_message', 'Developer ' . $developer->name . ' successfully deleted.');
     }
 }

@@ -47,7 +47,7 @@ class GameController extends Controller
         // Store the publishers
         $game->publishers()->sync($request->input('publishers'));
 
-        return redirect()->route('games.show', ['game' => $game->id]);
+        return redirect()->route('games.show', ['game' => $game->id])->with('success_message', 'Game ' . $game->name . ' successfully created.');
     }
 
     /**
@@ -88,7 +88,7 @@ class GameController extends Controller
         // Update the tags
         $game->tags()->sync($request->input('tags'));
 
-        return redirect()->route('games.show', ['game' => $game->id]);
+        return redirect()->route('games.show', ['game' => $game->id])->with('success_message', 'Game ' . $game->name . ' successfully updated.');
     }
 
     /**
@@ -101,6 +101,6 @@ class GameController extends Controller
         $game->publishers()->detach();
         // Delete the game
         $game->delete();
-        return redirect()->route('games.index');
+        return redirect()->route('games.index')->with('success_message', 'Game ' . $game->name . ' successfully deleted.');
     }
 }

@@ -38,7 +38,7 @@ class TagController extends Controller
         // store a tag
         $tag = Tag::create($request->validated());
 
-        return redirect()->route('tags.show', ['tag' => $tag->id]);
+        return redirect()->route('tags.show', ['tag' => $tag->id])->with('success_message', 'Tag ' . $tag->name . ' successfully created.');
     }
 
     /**
@@ -68,7 +68,7 @@ class TagController extends Controller
         // update a tag
         $tag->update($request->validated());
 
-        return redirect()->route('tags.show', ['tag' => $tag->id]);
+        return redirect()->route('tags.show', ['tag' => $tag->id])->with('success_message', 'Tag ' . $tag->name . ' successfully updated.');
     }
 
     /**
@@ -79,6 +79,6 @@ class TagController extends Controller
         // delete a tag
         $tag->delete();
 
-        return redirect()->route('tags.index');
+        return redirect()->route('tags.index')->with('success_message', 'Tag ' . $tag->name . ' successfully deleted.');
     }
 }
