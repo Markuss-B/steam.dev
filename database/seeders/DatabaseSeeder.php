@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             GamePublishersSeeder::class,
             TagSeeder::class,
             GameTagsSeeder::class,
+            RolesAndPermissionsSeeder::class,
         ]);
     }
 }
