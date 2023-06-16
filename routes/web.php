@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\DeveloperController;
@@ -19,7 +20,17 @@ use App\Http\Controllers\TagController;
 // Home
 Route::get('/', function () {
     return view('welcome-steam');
-})->name('home');
+})->name('home')->middleware('auth');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 // Games
 Route::get('/games', [GameController::class, 'index'])->name('games.index');
@@ -49,3 +60,4 @@ Route::put('/tags/{tag}/update', [TagController::class, 'update'])->name('tags.u
 Route::delete('/tags/{tag}/destroy', [TagController::class, 'destroy'])->name('tags.destroy');
 
 
+require __DIR__.'/auth.php';
