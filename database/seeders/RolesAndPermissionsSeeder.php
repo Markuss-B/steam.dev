@@ -37,26 +37,18 @@ class RolesAndPermissionsSeeder extends Seeder
             'user' => [],
             'developer' => [
                 'games.create',
-                'games.store',
-                'games.edit',
-                'games.update',
-                'games.destroy',
+                'own_games.edit',
+                'own_games.destroy',
             ],
             'admin' => [
                 'games.create',
-                'games.store',
                 'games.edit',
-                'games.update',
                 'games.destroy',
                 'developers.create',
-                'developers.store',
                 'developers.edit',
-                'developers.update',
                 'developers.destroy',
                 'tags.create',
-                'tags.store',
                 'tags.edit',
-                'tags.update',
                 'tags.destroy',
             ],
         ];
@@ -64,7 +56,9 @@ class RolesAndPermissionsSeeder extends Seeder
         // Create all permissions and assign them to the roles
         foreach ($rolePermissions as $roleName => $permissions) {
             // Create role
-            $role = Role::create(['name' => $roleName]);
+            $role = Role::firstorcreate(['name' => $roleName]);
+            // delete current permissions if there are any
+            $role->permissions()->detach();
 
             // Add permissions for this role and all roles lower in the hierarchy
             foreach ($roleHierarchy[$roleName] as $lowerRoleName) {
