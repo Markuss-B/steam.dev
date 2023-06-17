@@ -23,6 +23,9 @@ class DeveloperController extends Controller
      */
     public function create()
     {
+        // authorize user
+        $this->authorize('create', Developer::class);
+
         // show the create form
         return view('developers.create');
     }
@@ -32,6 +35,9 @@ class DeveloperController extends Controller
      */
     public function store(StoreDeveloperRequest $request)
     {
+        // authorize user
+        $this->authorize('create', Developer::class);
+
         // Store the developer
         $developer = Developer::create($request->validated());
 
@@ -52,6 +58,9 @@ class DeveloperController extends Controller
      */
     public function edit(Developer $developer)
     {
+        // authorize user
+        $this->authorize('update', $developer);
+
         // show the edit form
         return view('developers.edit', compact('developer'));
     }
@@ -61,6 +70,9 @@ class DeveloperController extends Controller
      */
     public function update(UpdateDeveloperRequest $request, Developer $developer)
     {
+        // authorize user
+        $this->authorize('update', $developer);
+
         // Update the developer
         $developer->update($request->validated());
 
@@ -72,6 +84,9 @@ class DeveloperController extends Controller
      */
     public function destroy(Developer $developer)
     {
+        // authorize user
+        $this->authorize('delete', $developer);
+
         // Delete the developer
         $developer->delete();
 

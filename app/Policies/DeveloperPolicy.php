@@ -13,7 +13,7 @@ class DeveloperPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermissionTo('developers.index');
     }
 
     /**
@@ -21,7 +21,7 @@ class DeveloperPolicy
      */
     public function view(User $user, Developer $developer): bool
     {
-        //
+        return $user->hasPermissionTo('developers.show');
     }
 
     /**
@@ -29,7 +29,7 @@ class DeveloperPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->hasPermissionTo('developers.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class DeveloperPolicy
      */
     public function update(User $user, Developer $developer): bool
     {
-        //
+        return $user->hasPermissionTo('developers.edit');
     }
 
     /**
@@ -45,7 +45,7 @@ class DeveloperPolicy
      */
     public function delete(User $user, Developer $developer): bool
     {
-        //
+        return $user->hasPermissionTo('developers.destroy');
     }
 
     /**
