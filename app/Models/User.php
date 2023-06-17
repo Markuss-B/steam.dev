@@ -43,4 +43,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function developers()
+    {
+        return $this->belongsToMany(Developer::class);
+    }
+
+    public function isDeveloperOf(Game $game): bool
+    {
+        return $game->developers->intersect($this->developers)->isNotEmpty();
+    }
 }

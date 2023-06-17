@@ -13,7 +13,7 @@ class GamePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermissionTo('games.index');
     }
 
     /**
@@ -21,7 +21,7 @@ class GamePolicy
      */
     public function view(User $user, Game $game): bool
     {
-        //
+        return $user->hasPermissionTo('games.show');
     }
 
     /**
@@ -29,7 +29,7 @@ class GamePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->hasPermissionTo('games.create');
     }
 
     /**
@@ -37,7 +37,9 @@ class GamePolicy
      */
     public function update(User $user, Game $game): bool
     {
-        //
+        return $user->hasRole('admin') ||
+            $user->hasPermissionTo('games.edit') ||
+            ($user->hasPermissionTo('own_games.edit') && $user->isDeveloperOf($game));
     }
 
     /**
@@ -45,7 +47,9 @@ class GamePolicy
      */
     public function delete(User $user, Game $game): bool
     {
-        //
+        return $user->hasRole('admin') ||
+            $user->hasPermissionTo('games.destroy') ||
+            ($user->hasPermissionTo('own_games.destroy') && $user->isDeveloperOf($game));
     }
 
     /**
@@ -54,6 +58,7 @@ class GamePolicy
     public function restore(User $user, Game $game): bool
     {
         //
+        return false;
     }
 
     /**
@@ -62,5 +67,6 @@ class GamePolicy
     public function forceDelete(User $user, Game $game): bool
     {
         //
+        return false;
     }
 }
