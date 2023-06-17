@@ -27,6 +27,9 @@ class GameController extends Controller
      */
     public function create(): View
     {
+        // authorize user
+        $this->authorize('create', Game::class);
+
         // show the create form
         $developers = Developer::orderBy('name')->get();
         $publishers = Publisher::orderBy('name')->get();
@@ -38,6 +41,9 @@ class GameController extends Controller
      */
     public function store(StoreGameRequest $request)
     {
+        // authorize user
+        $this->authorize('create', Game::class);
+
         // Store the game
         $game = Game::create($request->validated());
 
@@ -64,6 +70,9 @@ class GameController extends Controller
      */
     public function edit(Game $game): View
     {
+        // authorize user
+        $this->authorize('update', $game);
+
         // show the edit form
         $developers = Developer::orderBy('name')->get();
         $publishers = Publisher::orderBy('name')->get();
@@ -76,6 +85,9 @@ class GameController extends Controller
      */
     public function update(UpdateGameRequest $request, Game $game)
     {
+        // authorize user
+        $this->authorize('update', $game);
+
         // Update the game
         $game->update($request->validated());
 
@@ -96,6 +108,9 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
+        // authorize user
+        $this->authorize('delete', $game);
+
         // Delete the many to many relationships
         $game->developers()->detach();
         $game->publishers()->detach();
