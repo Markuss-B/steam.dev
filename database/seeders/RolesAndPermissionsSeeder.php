@@ -36,9 +36,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ],
             'user' => [],
             'developer' => [
-                'games.create',
                 'own_games.edit',
-                'own_games.destroy',
             ],
             'admin' => [
                 'games.create',
