@@ -20,7 +20,7 @@ use App\Http\Controllers\TagController;
 // Home
 Route::get('/', function () {
     return view('welcome-steam');
-})->name('home')->middleware('auth');
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
