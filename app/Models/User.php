@@ -53,4 +53,54 @@ class User extends Authenticatable
     {
         return $game->developers->intersect($this->developers)->isNotEmpty();
     }
+    
+    // Games
+    public function games()
+    {
+        return $this->belongsToMany(Game::class)
+            ->withPivot('play_time', 'acquisition_date', 'is_favorite')
+            ->withTimestamps();
+    }
+
+    public function addGame(Game $game)
+    {
+        $this->games()->attach($game);
+    }
+
+    public function removeGame(Game $game)
+    {
+        $this->games()->detach($game);
+    }
+
+    // ///
+    // public function favorite(Game $game)
+    // {
+    //     $this->games()->updateExistingPivot($game, ['is_favorite' => true]);
+    // }
+
+    // public function unfavorite(Game $game)
+    // {
+    //     $this->games()->updateExistingPivot($game, ['is_favorite' => false]);
+    // }
+
+    // public function play(Game $game, int $playTime)
+    // {
+    //     $this->games()->updateExistingPivot($game, ['play_time' => $playTime]);
+    // }
+
+    // ///
+    // public function isFavorite(Game $game): bool
+    // {
+    //     return $this->games->where('id', $game->id)->first()->pivot->is_favorite;
+    // }
+
+    // public function playTime(Game $game): int
+    // {
+    //     return $this->games->where('id', $game->id)->first()->pivot->play_time;
+    // }
+
+    // public function acquisitionDate(Game $game): string
+    // {
+    //     return $this->games->where('id', $game->id)->first()->pivot->acquisition_date;
+    // }
 }

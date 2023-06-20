@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\DeveloperController;
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\TagController;
 
 /*
@@ -58,6 +59,12 @@ Route::get('/tags/{tag}', [TagController::class, 'show'])->name('tags.show');
 Route::get('/tags/{tag}/edit', [TagController::class, 'edit'])->name('tags.edit');
 Route::put('/tags/{tag}/update', [TagController::class, 'update'])->name('tags.update');
 Route::delete('/tags/{tag}/destroy', [TagController::class, 'destroy'])->name('tags.destroy');
+
+// Purchase game
+Route::post('/games/{game}/purchase', [LibraryController::class, 'purchase'])->name('game.purchase')->middleware('auth');
+
+// Library
+Route::get('/library', [LibraryController::class, 'show'])->name('library.show')->middleware('auth');
 
 
 require __DIR__.'/auth.php';

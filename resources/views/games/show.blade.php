@@ -27,4 +27,9 @@
             {{ $tag->name }}@if (!$loop->last), @endif
         @endforeach
     </p>
+    {{-- purchase --}}
+    <form action="{{ route('game.purchase', ['game' => $game->id]) }}" method="POST">
+        @csrf
+        <button type="submit">Purchase</button>	
+    </form>
 </x-layout>

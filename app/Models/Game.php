@@ -34,4 +34,11 @@ class Game extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)
+            ->withPivot('play_time', 'acquisition_date', 'is_favorite')
+            ->withTimestamps();
+    }
 }
