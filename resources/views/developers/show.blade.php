@@ -1,4 +1,4 @@
-<x-layout title="{{ $developer->name }}">
+<x-layout title="{{$developer->name}}">
     <a href="{{ route('developers.index') }}">Back to developers</a>
     <a href="{{ route('developers.edit', $developer->id) }}">Edit</a>
     <form action="{{ route('developers.destroy', $developer->id) }}" method="POST">
