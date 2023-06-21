@@ -105,11 +105,11 @@
                 </div>
             @else
                 <div class="px-4">
-                    <x-secondary-button>
-                        <a href="{{ route('login') }}">{{ __('Log in') }}</a>
+                    <x-secondary-button :href="route('login')">
+                        {{ __('Log in') }}
                     </x-secondary-button>
-                    <x-secondary-button>
-                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                    <x-secondary-button :href="route('register')">
+                        {{ __('Register') }}
                     </x-secondary-button>
                 </div>
             @endif
