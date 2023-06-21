@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             GameTagsSeeder::class,
             RolesAndPermissionsSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
