@@ -65,7 +65,10 @@ Route::delete('/tags/{tag}/destroy', [TagController::class, 'destroy'])->name('t
 Route::post('/games/{game}/purchase', [LibraryController::class, 'purchase'])->name('game.purchase')->middleware('auth');
 
 // Library
-Route::get('/library', [LibraryController::class, 'show'])->name('library.show')->middleware('auth');
+Route::get('/library', [LibraryController::class, 'index'])->name('library.index')->middleware('auth');
+Route::get('/library/{game}', [LibraryController::class, 'show'])->name('library.show')->middleware('auth');
+Route::post('/library/{game}/favorite', [LibraryController::class, 'favorite'])->name('library.favorite')->middleware('auth');
+Route::post('/library/{game}/unfavorite', [LibraryController::class, 'unfavorite'])->name('library.unfavorite')->middleware('auth');
 
 
 require __DIR__.'/auth.php';

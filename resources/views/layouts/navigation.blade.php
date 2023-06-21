@@ -22,7 +22,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('library.show')" :active="request()->routeIs('library')">
+                    <x-nav-link :href="route('library.index')" :active="request()->routeIs('library')">
                         {{ __('Library') }}
                     </x-nav-link>
                 </div>

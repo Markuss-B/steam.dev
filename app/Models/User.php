@@ -72,27 +72,27 @@ class User extends Authenticatable
         $this->games()->detach($game);
     }
 
-    // ///
-    // public function favorite(Game $game)
-    // {
-    //     $this->games()->updateExistingPivot($game, ['is_favorite' => true]);
-    // }
+    ///
+    public function favoriteGame(Game $game)
+    {
+        $this->games()->updateExistingPivot($game, ['is_favorite' => true]);
+    }
 
-    // public function unfavorite(Game $game)
-    // {
-    //     $this->games()->updateExistingPivot($game, ['is_favorite' => false]);
-    // }
+    public function unfavoriteGame(Game $game)
+    {
+        $this->games()->updateExistingPivot($game, ['is_favorite' => false]);
+    }
+    ///
+    public function isFavoriteGame(Game $game): bool
+    {
+        return $this->games->where('id', $game->id)->first()->pivot->is_favorite;
+    }
 
     // public function play(Game $game, int $playTime)
     // {
     //     $this->games()->updateExistingPivot($game, ['play_time' => $playTime]);
     // }
 
-    // ///
-    // public function isFavorite(Game $game): bool
-    // {
-    //     return $this->games->where('id', $game->id)->first()->pivot->is_favorite;
-    // }
 
     // public function playTime(Game $game): int
     // {

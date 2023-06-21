@@ -1,20 +1,24 @@
-<x-layout
-    title='Library'
-    description="Library of games"
->
-<ul>
-    {{-- check if has games --}}
-    @if (!$games)
-        <p>No games in library</p>
+<x-app-layout title="Library" basiclayout="true">
+    <h1>{{ $game->name }}</h1>
+    <p>Play time: {{ $game->pivot->play_time }}</p>
+    <p>Acquired: {{ $game->pivot->acquisition_date }}</p>
+    <p>Favorite: {{ $game->pivot->is_favorite }}</p>
+    @if ($game->pivot->is_favorite)
+        <form action="{{ route('library.unfavorite', ['game' => $game->id]) }}" method="POST">
+            @csrf
+            <input type="hidden" name="is_favourite" value="0">
+            <x-primary-button type="submit">
+                {{ __('Unmark as favorite') }}
+            </x-primary-button>
+        </form>
     @else
-        <p>Games in library:</p>
-        @foreach ($games as $game)
-            <li>
-                <a href="{{ route('games.show', ['game' => $game->id]) }}">
-                    {{ $game->name }}
-                </a>
-            </li>
-        @endforeach
+        <form action="{{ route('library.favorite', ['game' => $game->id]) }}" method="POST">
+            @csrf
+            <input type="hidden" name="is_favourite" value="1">
+            <x-primary-button type="submit">
+                {{ __('Mark as favorite') }}
+            </x-primary-button>
+        </form>
     @endif
-</ul>
-</x-layout>
+
+</x-app-layout>
