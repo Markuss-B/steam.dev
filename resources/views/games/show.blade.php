@@ -1,15 +1,16 @@
-<x-layout title="{{ $game->name }}">
-    <a href="{{ route('games.index') }}">Back to games</a>
-    {{-- edit game --}}
-    <a href="{{ route('games.edit', ['game' => $game->id]) }}">Edit</a>
-    {{-- delete game --}}
-    <form action="{{ route('games.destroy', ['game' => $game->id]) }}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button type="submit">Delete</button>
-    </form>
-    <p>Price: €{{ $game->price / 100 }}</p>
-    <p>Discount: {{ $game->discount }}%</p>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ $game->name }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+
+    <h2 class="text-xl">{{ $game->name }}</h2>
     <p>Release Date: {{ $game->release_date }}</p>
     <p>Developers:
         @foreach ($game->developers as $developer)
@@ -28,8 +29,23 @@
         @endforeach
     </p>
     {{-- purchase --}}
-    <form action="{{ route('game.purchase', ['game' => $game->id]) }}" method="POST">
-        @csrf
-        <button type="submit">Purchase</button>	
-    </form>
-</x-layout>
+    @if ($game->userOwnsGame())
+        <x-secondary-button disabled>
+            {{ __('Owned') }}
+        </x-secondary-button>
+    @else
+        <p>Price: {{ $game->price / 100 }}</p>
+        @if ($game->discount > 0)
+            <p>Discount: {{ $game->discount }}</p>
+            <p>Price with discount: {{ $game->price - ($game->price * $game->discount / 100) }}</p>
+        @endif
+
+        <form action="{{ route('game.purchase', ['game' => $game->id]) }}" method="POST">
+            @csrf
+            <x-primary-button>
+                {{ __('Purchase') }}
+            </x-primary-button>
+        </form>
+    @endif
+
+</x-app-layout>

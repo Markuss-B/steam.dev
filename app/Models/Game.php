@@ -41,4 +41,9 @@ class Game extends Model
             ->withPivot('play_time', 'acquisition_date', 'is_favorite')
             ->withTimestamps();
     }
+
+    public function userOwnsGame(): bool
+    {
+        return $this->users()->where('user_id', auth()->id())->exists();
+    }
 }
