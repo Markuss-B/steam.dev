@@ -41,6 +41,7 @@ Route::get('/games/{game}', [GameController::class, 'show'])->name('games.show')
 Route::get('/games/{game}/edit', [GameController::class, 'edit'])->name('games.edit');
 Route::put('/games/{game}/update', [GameController::class, 'update'])->name('games.update');
 Route::delete('/games/{game}/destroy', [GameController::class, 'destroy'])->name('games.destroy');
+Route::get('/search', [GameController::class, 'search'])->name('games.search');
 
 // Developers
 Route::get('/developers', [DeveloperController::class, 'index'])->name('developers.index');

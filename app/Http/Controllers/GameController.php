@@ -9,6 +9,8 @@ use App\Models\Tag;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+
 
 class GameController extends Controller
 {
@@ -118,4 +120,46 @@ class GameController extends Controller
         $game->delete();
         return redirect()->route('games.index')->with('success_message', 'Game ' . $game->name . ' successfully deleted.');
     }
+
+    /**
+     * Show the form for searching the specified resource.
+     */
+    public function search(Request $request)
+    {
+        // Start the query
+        $query = Game::query();
+    
+        // Check if a search term is set, and if it is, search the games table.
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->input('search') . '%');
+        }
+    
+        // Check if any tag checkboxes are checked
+        if ($request->filled('tags')) {
+            $query->whereHas('tags', function ($query) use ($request) {
+                $query->whereIn('name', $request->input('tags'));
+            });
+        }
+    
+        // Check if an on sale filter is set
+        if ($request->filled('on_sale')) {
+            $query->where('discount', '>', 0);
+        }
+    
+        // Check for sorting options
+        if ($request->filled('sort')) {
+            $sort = $request->input('sort');
+            $query->orderBy($sort, ($request->input('order')) ? 'desc' : 'asc');
+        }
+    
+        // Get the results and pass them to the view
+        $games = $query->paginate(100);
+
+        $tags = Tag::all()->sortBy('name');
+
+        $request->flash();
+
+        return view('games.search', ['games' => $games, 'tags' => $tags]);
+    }
+    
 }
