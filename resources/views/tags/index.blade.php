@@ -1,4 +1,5 @@
-<x-layout title="Tags">
+<x-app-layout title="Tags" :basiclayout='true'>
+    {{-- create new tag --}}
     <a href="{{ route('tags.create') }}">Create new tag</a>
     <ul>
         @foreach ($tags as $tag)
@@ -9,4 +10,4 @@
             </li>
         @endforeach
     </ul>
-</x-layout>
+</x-app-layout>

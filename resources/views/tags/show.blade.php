@@ -1,4 +1,4 @@
-<x-layout title="{{ $tag->name }}">
+<x-app-layout title="Tag: {{ $tag->name }}" :basiclayout='true'>
     {{-- back to tags --}}
     <a href="{{ route('tags.index') }}">Back to tags</a>
     {{-- edit tag --}}
@@ -9,19 +9,10 @@
         @method('DELETE')
         <button type="submit">Delete</button>
     </form>
-    <p>Games:</p>
-    <table>
-        <thead>
-            <tr>
-                <th>Game</th>
-                <th>Price</th>
-                <th>Discount</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($tag->games as $game)
-                <x-game-card :game="$game" />
-            @endforeach
-        </tbody>
-    </table>
-</x-layout>
+    {{-- list of games --}}
+    <div class="w-full flex flex-wrap justify-between">
+        @foreach ($tag->games as $game)
+            <x-game-card :game="$game" link="{{ route('games.show', ['game' => $game->id]) }}" showPrice="true" />
+        @endforeach
+    </div>
+</x-app-layout>
