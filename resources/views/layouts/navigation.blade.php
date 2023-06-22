@@ -12,17 +12,17 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link class="text-xl" :href="route('store')" :active="request()->routeIs('store')">
+                        {{ __('Store') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('games.index')" :active="request()->routeIs('games.index')">
+                    <x-nav-link class="text-xl" :href="route('games.index')" :active="request()->routeIs('games.index')">
                         {{ __('Games') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('library.index')" :active="request()->routeIs('library')">
+                    <x-nav-link class="text-xl" :href="route('library.index')" :active="request()->routeIs('library')">
                         {{ __('Library') }}
                     </x-nav-link>
                 </div>

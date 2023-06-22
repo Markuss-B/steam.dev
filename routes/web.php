@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\DeveloperController;
 use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\TagController;
 
 /*
@@ -19,9 +20,7 @@ use App\Http\Controllers\TagController;
 */
 
 // Home
-Route::get('/', function () {
-    return view('welcome-steam');
-})->name('home');
+Route::get('/', [StoreController::class, 'index'])->name('store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
