@@ -8,14 +8,18 @@ use Illuminate\View\Component;
 
 class GameCard extends Component
 {
-    public $game;
-
     /**
      * Create a new component instance.
      */
-    public function __construct($game)
+    public function __construct(
+        public $game,
+        public $link = '',
+        public bool $showPrice = false
+    )
     {
         $this->game = $game;
+        $this->link = $link;
+        $this->showPrice = $showPrice;
     }
 
     /**

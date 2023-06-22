@@ -1,17 +1,13 @@
 <x-app-layout title="Library" basiclayout="true">
-<ul>
     {{-- check if has games --}}
     @if (!$games)
         <p>No games in library</p>
     @else
         <p>Games in library:</p>
+        <div class="w-full flex flex-wrap justify-between">
         @foreach ($games as $game)
-            <li>
-                <a href="{{ route('library.show', ['game' => $game->id]) }}">
-                    {{ $game->name }}
-                </a>
-            </li>
+            <x-game-card :game="$game" link="{{ route('library.show', ['game' => $game->id]) }}" />
         @endforeach
+        </div>
     @endif
-</ul>
 </x-app-layout>
