@@ -153,7 +153,7 @@ class GameController extends Controller
         }
     
         // Get the results and pass them to the view
-        $games = $query->paginate(100);
+        $games = $query->paginate(10);
 
         $tags = Tag::all()->sortBy('name');
 
