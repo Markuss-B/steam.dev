@@ -5,16 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Developer;
 use App\Http\Requests\StoreDeveloperRequest;
 use App\Http\Requests\UpdateDeveloperRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class DeveloperController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Get all developers from the database
-        $developers = Developer::all();
+        $developers = Developer::query()
+            ->when($request->has('search'), function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%');
+            })
+            ->orderBy('name')
+            ->paginate(25);
+
+        if ($request->ajax()) {
+            $view = view('developers.load', compact('developers'))->render();
+            return Response::json(['view' => $view, 'nextPageUrl' => $developers->nextPageUrl()]);
+        }
+
         return view('developers.index', compact('developers'));
     }
 
