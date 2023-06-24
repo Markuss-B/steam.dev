@@ -10,6 +10,7 @@ use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 
 class GameController extends Controller
@@ -17,10 +18,15 @@ class GameController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request)
     {
-        // Get all games from the database
-        $games = Game::all();
+        $games = Game::orderBy('name')->paginate(25);
+
+        if($request->ajax()) {
+            $view = view('components.scroller.load', ['view' => 'games', 'data' => $games])->render();
+            return Response::json(['view' => $view, 'nextPageUrl' => $games->nextPageUrl()]);
+        }
+
         return view('games.index', compact('games'));
     }
 

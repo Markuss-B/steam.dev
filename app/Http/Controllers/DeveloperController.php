@@ -7,13 +7,14 @@ use App\Http\Requests\StoreDeveloperRequest;
 use App\Http\Requests\UpdateDeveloperRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Contracts\View\View;
 
 class DeveloperController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $developers = Developer::query()
             ->when($request->has('search'), function ($query) use ($request) {
@@ -23,7 +24,7 @@ class DeveloperController extends Controller
             ->paginate(25);
 
         if ($request->ajax()) {
-            $view = view('developers.load', compact('developers'))->render();
+            $view = view('components.scroller.load', ['view' => 'developers', 'data' => $developers])->render();
             return Response::json(['view' => $view, 'nextPageUrl' => $developers->nextPageUrl()]);
         }
 
