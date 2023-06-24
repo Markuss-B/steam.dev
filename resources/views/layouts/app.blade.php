@@ -18,6 +18,10 @@
 
         <!-- Styles -->
         <x-stylesheets />
+
+        @if (isset($styles))
+            {{ $styles }}
+        @endif
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -49,7 +53,7 @@
 
             <!-- Page Content -->
             <main>
-                @if (!$basiclayout)
+            @if (!$basiclayout)
                     {{ $slot }}
                 @else
                 <div class="py-12">
