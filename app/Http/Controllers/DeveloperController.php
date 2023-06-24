@@ -14,7 +14,7 @@ class DeveloperController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         $developers = Developer::query()
             ->when($request->has('search'), function ($query) use ($request) {
