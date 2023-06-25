@@ -48,19 +48,48 @@
     </div>
 </x-app-layout>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('.game-l').click(function () {
-            var gameId = $(this).data('id');
-            $.ajax({
-                url: '/library/' + gameId,
-                type: 'GET',
-                success: function (response) {
-                    $('#game').html(response);
-                    // diplsay block
-                    $('#game').css('display', 'block');
-                }
-            });
-        });
+$(document).ready(function () {
+    // Retrieve the last clicked game ID from session storage
+    var lastClickedGameId = sessionStorage.getItem('lastClickedGame');
+
+    // Highlight the last clicked game if it exists
+    if (lastClickedGameId) {
+        $('.game-l[data-id="' + lastClickedGameId + '"]').addClass('active');
+        // Make the Ajax request to load the game details
+        loadGameDetails(lastClickedGameId);
+    }
+
+    // Handle the click event on game elements
+    $('.game-l').click(function () {
+        var gameId = $(this).data('id');
+
+        // Save the clicked game ID in session storage
+        sessionStorage.setItem('lastClickedGame', gameId);
+
+        // Remove the "active" class from other game elements
+        $('.game-l').removeClass('active');
+
+        // Add the "active" class to the clicked game element
+        $(this).addClass('active');
+
+        // Make the Ajax request to load the game details
+        loadGameDetails(gameId);
     });
+
+    // Function to load the game details
+    function loadGameDetails(gameId) {
+        $.ajax({
+            url: '/library/' + gameId,
+            type: 'GET',
+            success: function (response) {
+                $('#game').html(response);
+                // diplsay block
+                $('#game').css('display', 'block');
+            }
+        });
+    }
+});
+
 </script>

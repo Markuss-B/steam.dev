@@ -1,4 +1,3 @@
-{{ $view }}
 <div
     class="jscroll w-full flex flex-wrap justify-around" 
     data-url="{{ $data->nextPageUrl() }}">
