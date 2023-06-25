@@ -69,5 +69,12 @@ Route::get('/library/{game}', [LibraryController::class, 'show'])->name('library
 Route::post('/library/{game}/favorite', [LibraryController::class, 'favorite'])->name('library.favorite')->middleware('auth');
 Route::post('/library/{game}/unfavorite', [LibraryController::class, 'unfavorite'])->name('library.unfavorite')->middleware('auth');
 
+// Store
+Route::middleware('ajax')->group(function () {
+    Route::get('/get/store/discounts', [StoreController::class, 'getDiscounts'])->name('get.store.discounts');
+    Route::get('/get/store/new', [StoreController::class, 'getNew'])->name('get.store.new');
+    Route::get('/get/store/top', [StoreController::class, 'getTopSellers'])->name('get.store.top');
+});
+
 
 require __DIR__.'/auth.php';
