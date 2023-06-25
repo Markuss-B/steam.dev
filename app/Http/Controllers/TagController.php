@@ -50,9 +50,9 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tag $tag)
+    public function show($tag)
     {
-        // show a tag
+
         return view('tags.show', compact('tag'));
     }
 
