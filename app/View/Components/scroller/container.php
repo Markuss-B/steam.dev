@@ -14,10 +14,21 @@ class container extends Component
     public function __construct(
         public string $view,
         public $data,
+        public string $id = '',
+        public bool $loadOnButtonPress = false,
+        public $dataUrl = null,
     )
     {
+        if (!$id)
+        {
+            $this->id = $view;
+        } else {
+            $this->id = $id;
+        }
         $this->view = $view;
         $this->data = $data;
+        $this->loadOnButtonPress = $loadOnButtonPress;
+        $this->dataUrl = $dataUrl;
     }
 
     /**
@@ -26,8 +37,11 @@ class container extends Component
     public function render(): View|Closure|string
     {
         return view('components.scroller.container')->with([
+            'id' => $this->id,
             'view' => $this->view,
             'data' => $this->data,
+            'loadOnButtonPress' => $this->loadOnButtonPress,
+            'dataUrl' => $this->dataUrl,
         ]);
     }
 }
