@@ -12,7 +12,7 @@
                     <p class="text-white">€{{ $game->price / 100 }}</p>
                 @else
                     <p class="text-green-600">-{{ $game->discount }}%</p>
-                    <p class="text-white text-xs line-through">€{{ $game->price / 100 }}</p>
+                    <p class="text-white text-xs line-through">€{{ number_format($game->price / 100 * 100 / (100 - $game->discount), 2) }}</p>
                     <p class="text-white">€{{ $game->price / 100 }}</p>
                 @endif
             </div>

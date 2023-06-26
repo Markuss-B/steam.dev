@@ -26,8 +26,8 @@
     @else
         <p>Price: {{ $game->price / 100 }}</p>
         @if ($game->discount > 0)
-            <p>Discount: {{ $game->discount }}</p>
-            <p>Price with discount: {{ $game->price - ($game->price * $game->discount / 100) }}</p>
+            <p>Discount: -{{ $game->discount }}%</p>
+            <p>Price without discount: {{ number_format($game->price / 100 * 100 / (100 - $game->discount), 2) }}</p>
         @endif
 
         <form action="{{ route('game.purchase', ['game' => $game->id]) }}" method="POST">

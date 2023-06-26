@@ -62,14 +62,52 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    public function addGame(Game $game)
+    public function addGame(Game $game, int $price = null)
     {
-        $this->games()->attach($game);
+        $this->games()->attach($game, ['acquisition_date' => now(), 'purchase_cost' => $price, 'is_favorite' => false, 'play_time' => 0]);
+        $this->save();
     }
 
     public function removeGame(Game $game)
     {
         $this->games()->detach($game);
+    }
+
+    public function addMoney(int $amount)
+    {
+        $this->balance += $amount;
+        $this->save();
+    }
+
+    public function deductMoney(int $amount)
+    {
+        if ($this->balance < $amount) {
+            return false;
+        }
+
+        $this->balance -= $amount;
+        $this->save();
+    }
+
+    public function buyGame(Game $game)
+    {
+        if ($this->ownsGame($game)) {
+            throw new \Exception('You already own this game.');
+        }
+
+        $price = $game->getPrice();
+
+        if ($this->balance < $price) {
+            throw new \Exception('You don\'t have enough money to buy this game.');
+        }
+
+        $this->deductMoney($price);
+        $this->addGame($game, $price);
+    }
+
+    public function ownsGame(Game $game): bool
+    {
+        return $this->games->contains($game);
     }
 
     ///

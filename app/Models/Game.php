@@ -46,4 +46,10 @@ class Game extends Model
     {
         return $this->users()->where('user_id', auth()->id())->exists();
     }
+
+    public function getPrice()
+    {
+        return $this->price;
+        //- ($this->price * ($this->discount / 100));
+    }
 }

@@ -15,13 +15,16 @@
 
     
     <div class="tags-container h-64 overflow-x-hidden float-right">
-        @foreach($tags as $tag)
-        <div class="tag-checkbox">
-            <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->name }}" {{ in_array($tag->name, old('tags', [])) ? 'checked' : '' }}>
-            <label for="tag{{ $tag->id }}">{{ $tag->name }}</label>
+        <input type="text" id="tagSearch" placeholder="Search tags...">
+        <div id="tagClones"></div>
+        <div id="tagList">
+            @foreach($tags as $tag)
+                <div class="tag-checkbox">
+                    <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->name }}" {{ in_array($tag->name, old('tags', [])) ? 'checked' : '' }}>
+                    <label for="tag{{ $tag->id }}">{{ $tag->name }}</label>
+                </div>
+            @endforeach
         </div>
-    @endforeach
-    
     </div>
 
     <button type="submit">Search</button>
@@ -48,3 +51,38 @@
 {{ $games->appends(request()->query())->links() }}
 
 </x-app-layout>
+
+<script>
+    $(document).ready(function(){
+      $("#tagSearch").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tagList .tag-checkbox").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    
+      $("input[type='checkbox']").on("change", function() {
+        var checkboxID = $(this).attr("id");
+        var cloneID = checkboxID + "-clone";
+        if (this.checked) {
+          var checkedItem = $(this).parent('.tag-checkbox');
+          var clone = checkedItem.clone(true);
+          clone.attr("id", cloneID);
+          $("#tagClones").prepend(clone);
+        } else {
+          $("#" + cloneID).remove();
+        }
+      });
+    
+      // When a clone checkbox is unchecked, also uncheck the original checkbox.
+      $(document).on("change", ".tag-checkbox input[type='checkbox']", function() {
+        var checkboxID = $(this).attr("id");
+        var originalID = checkboxID.replace("-clone", "");
+        if (!this.checked) {
+          $("#" + originalID).prop("checked", false);
+        }
+      });
+    });
+</script>
+    
+    

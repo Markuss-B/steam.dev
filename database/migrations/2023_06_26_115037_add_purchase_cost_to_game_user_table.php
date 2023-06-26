@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('game_tag', function (Blueprint $table) {
-            $table->foreignId('game_id')->constrained()->onDelete('cascade');
-            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
-            $table->primary(['game_id', 'tag_id']);
-            $table->timestamps();
+        Schema::table('game_user', function (Blueprint $table) {
+            $table->integer('purchase_cost')->after('acquisition_date');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('game_tag');
+        Schema::table('game_user', function (Blueprint $table) {
+            $table->dropColumn('purchase_cost');
+        });
     }
 };

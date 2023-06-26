@@ -137,7 +137,24 @@ class GameController extends Controller
     
         // Check if a search term is set, and if it is, search the games table.
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->input('search') . '%');
+            $searchTerm = $request->input('search');
+            $query->where('name', 'like', '%' . $searchTerm . '%');
+    
+            // check if the search term matches any tag names
+            $tag = Tag::where('name', $searchTerm)->first();
+            if($tag) {
+                $query->orWhereHas('tags', function ($query) use ($tag) {
+                    $query->where('name', $tag->name);
+                });
+            }
+    
+            // check if the search term matches any developer names
+            $developer = Developer::where('name', $searchTerm)->first();
+            if($developer) {
+                $query->orWhereHas('developers', function ($query) use ($developer) {
+                    $query->where('name', $developer->name);
+                });
+            }
         }
     
         // Check if any tag checkboxes are checked
@@ -160,12 +177,13 @@ class GameController extends Controller
     
         // Get the results and pass them to the view
         $games = $query->paginate(10);
-
+    
         $tags = Tag::all()->sortBy('name');
-
+    
         $request->flash();
-
+    
         return view('games.search', ['games' => $games, 'tags' => $tags]);
     }
+    
     
 }

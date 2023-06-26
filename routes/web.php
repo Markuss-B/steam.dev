@@ -30,6 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // user
+    Route::get('/users', [ProfileController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}', [ProfileController::class, 'show'])->name('users.show');
+
 });
 
 // Games
@@ -60,9 +65,6 @@ Route::get('/tags/{tag}/edit', [TagController::class, 'edit'])->name('tags.edit'
 Route::put('/tags/{tag}/update', [TagController::class, 'update'])->name('tags.update');
 Route::delete('/tags/{tag}/destroy', [TagController::class, 'destroy'])->name('tags.destroy');
 
-// Purchase game
-Route::post('/games/{game}/purchase', [LibraryController::class, 'purchase'])->name('game.purchase')->middleware('auth');
-
 // Library
 Route::get('/library', [LibraryController::class, 'index'])->name('library.index')->middleware('auth');
 Route::get('/library/{game}', [LibraryController::class, 'show'])->name('library.show')->middleware('auth');
@@ -74,6 +76,12 @@ Route::middleware('ajax')->group(function () {
     Route::get('/get/store/discounts', [StoreController::class, 'getDiscounts'])->name('get.store.discounts');
     Route::get('/get/store/new', [StoreController::class, 'getNew'])->name('get.store.new');
     Route::get('/get/store/top', [StoreController::class, 'getTopSellers'])->name('get.store.top');
+});
+Route::middleware(['auth'])->group(function () {
+    Route::post('/games/{game}/purchase', [StoreController::class, 'purchase'])->name('game.purchase');
+    Route::get('/balance', [StoreController::class, 'balance'])->name('balance');
+    Route::post('/balance/add', [StoreController::class, 'addBalance'])->name('balance.add');
+    Route::get('/store/purchases', [StoreController::class, 'purchaseHistory'])->name('store.purchases');
 });
 
 
