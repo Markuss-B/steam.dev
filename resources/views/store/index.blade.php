@@ -8,30 +8,12 @@
                 <x-search-bar />
             </form>
 
-            <div class="flex flex-wrap max-w-7xl justify-center">
-                @if ($tags->previousPageUrl())
-                    <a href="{{ $tags->previousPageUrl() }}">
-                        <x-primary-button><<</x-primary-button>
-                    </a>
-                @else
-                    <a href="{{ $tags->url($tags->lastPage()) }}">
-                        <x-primary-button><<</x-primary-button>
-                    </a>
-                @endif
+            <div class="owl-carousel">
                 @foreach ($tags as $tag)
                     <a href="{{ route('tags.show', ['tag' => $tag->id]) }}">
                         <x-secondary-button>{{ $tag->name }}</x-secondary-button>
                     </a>
                 @endforeach
-                @if ($tags->nextPageUrl())
-                    <a href="{{ $tags->nextPageUrl() }}">
-                        <x-primary-button>>></x-primary-button>
-                    </a>
-                @else
-                    <a href="{{ $tags->url(1) }}">
-                        <x-primary-button>>></x-primary-button>
-                    </a>
-                @endif
             </div>
 
 
@@ -54,3 +36,12 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    $(document).ready(function(){
+  $('.owl-carousel').owlCarousel({
+    loop:true,
+    autoWidth:true,
+  });
+});
+</script>

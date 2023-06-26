@@ -15,8 +15,7 @@ class StoreController extends Controller
     public function index(Request $request)
     {
         $games = Game::all();
-        $tags = Tag::orderBy('name')->paginate(10);
-        $tags->url($tags->lastPage());
+        $tags = Tag::orderBy('name')->get();
 
         $count = 5;
         $discountedGames = Store::getDiscountedGames($count);
