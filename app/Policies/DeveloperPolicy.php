@@ -13,7 +13,7 @@ class DeveloperPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('developers.index');
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class DeveloperPolicy
      */
     public function view(User $user, Developer $developer): bool
     {
-        return $user->hasPermissionTo('developers.show');
+        return true;
     }
 
     /**

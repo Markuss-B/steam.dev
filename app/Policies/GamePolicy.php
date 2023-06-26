@@ -13,7 +13,7 @@ class GamePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('games.index');
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class GamePolicy
      */
     public function view(User $user, Game $game): bool
     {
-        return $user->hasPermissionTo('games.show');
+        return true;
     }
 
     /**

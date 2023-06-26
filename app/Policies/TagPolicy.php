@@ -13,7 +13,7 @@ class TagPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('tags.index');
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class TagPolicy
      */
     public function view(User $user, Tag $tag): bool
     {
-        return $user->hasPermissionTo('tags.show');
+        return true;
     }
 
     /**

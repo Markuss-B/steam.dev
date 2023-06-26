@@ -14,26 +14,39 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $parastais = User::create([
-            'name' => 'parastais',
-            'email' => 'parastais@gmail.com',
-            'password' => Hash::make('parastais'),
-        ]);
+        if (! User::where('name', 'parastais')->exists()) {
+            $parastais = User::create([
+                'name' => 'parastais',
+                'email' => 'parastais@gmail.com',
+                'password' => Hash::make('parastais'),
+            ]);
+        }
 
-        $developer = User::create([
-            'name' => 'developer',
-            'email' => 'developer@gmail.com',
-            'password' => Hash::make('developer'),
-        ]);
+        // if developer already exists then don't create
+        if (! User::where('name', 'developer')->exists()) {
+            $developer = User::create([
+                'name' => 'developer',
+                'email' => 'developer@gmail.com',
+                'password' => Hash::make('developer'),
+            ]);
+            $developer->assignRole('developer');
+        } else {
+            $developer = User::where('name', 'developer')->first();
+            $developer->assignRole('developer');
+        }
 
-        $developer->assignRole('developer');
 
-        $admin = User::create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin'),
-        ]);
+        if (! User::where('name', 'admin')->exists()) {
+            $admin = User::create([
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('admin'),
+            ]);
+            $admin->assignRole('admin');
+        } else {
+            $admin = User::where('name', 'admin')->first();
+            $admin->assignRole('admin');
+        }
 
-        $admin->assignRole('admin');
     }
 }
