@@ -66,10 +66,16 @@ Route::put('/tags/{tag}/update', [TagController::class, 'update'])->name('tags.u
 Route::delete('/tags/{tag}/destroy', [TagController::class, 'destroy'])->name('tags.destroy');
 
 // Library
-Route::get('/library', [LibraryController::class, 'index'])->name('library.index')->middleware('auth');
-Route::get('/library/{game}', [LibraryController::class, 'show'])->name('library.show')->middleware('auth');
-Route::post('/library/{game}/favorite', [LibraryController::class, 'favorite'])->name('library.favorite')->middleware('auth');
-Route::post('/library/{game}/unfavorite', [LibraryController::class, 'unfavorite'])->name('library.unfavorite')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/library', [LibraryController::class, 'index'])->name('library.index');
+    Route::get('/library/{game}', [LibraryController::class, 'show'])->name('library.show');
+    // favouriing
+    Route::post('/library/{game}/favorite', [LibraryController::class, 'favorite'])->name('library.favorite');
+    Route::post('/library/{game}/unfavorite', [LibraryController::class, 'unfavorite'])->name('library.unfavorite');
+    // playing games
+    Route::post('/library/{game}/play', [LibraryController::class, 'play'])->name('library.play');
+    Route::post('/library/{game}/stop', [LibraryController::class, 'stop'])->name('library.stop');
+});
 
 // Store
 Route::middleware('ajax')->group(function () {

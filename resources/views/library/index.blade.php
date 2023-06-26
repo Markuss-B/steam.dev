@@ -1,6 +1,8 @@
 <x-app-layout title="Library">
     <x-slot name="styles">
         @vite('resources/css/library.css')
+    </x-slot>
+    <x-slot name="scripts">
         @vite('resources/js/library.js')
     </x-slot>
     <div class="sidemenu">

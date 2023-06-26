@@ -5,7 +5,17 @@
 <div class="content">
     <div class="header">
         <div class="play">
-            <button class="play-btn">&#9658;Play</button>
+            @if (Auth::user()->isPlaying($game))
+                <form method="POST" action="{{ route('library.stop', ['game' => $game->id])}}">
+                    @csrf
+                    <button class="play-btn">&#9724;Stop</button>
+                </form>
+            @else
+                <form method="POST" action="{{ route('library.play', ['game' => $game->id])}}">
+                    @csrf
+                    <button class="play-btn">&#9658;Play</button>
+                </form>
+            @endif
         </div>
         <ul class="stats">
             <li class="playtime">
@@ -13,7 +23,12 @@
                 <div>
                     <h3>Play time</h3>
                     <p id="gamehours">
-                        {{ $game->pivot->play_time }}
+                        @if ($game->pivot->play_time > 60)
+                            {{ $game->pivot->play_time / 60 }} hours
+                            
+                        @else
+                            {{ $game->pivot->play_time }} minutes
+                        @endif
                     </p>
                 </div>
             </li>

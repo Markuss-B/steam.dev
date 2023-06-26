@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -22,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'balance',
+        'currently_playing',
+        'started_playing_at',
     ];
 
     /**
@@ -110,7 +114,7 @@ class User extends Authenticatable
         return $this->games->contains($game);
     }
 
-    ///
+    // favorite games
     public function favoriteGame(Game $game)
     {
         $this->games()->updateExistingPivot($game, ['is_favorite' => true]);
@@ -125,6 +129,50 @@ class User extends Authenticatable
     {
         return $this->games->where('id', $game->id)->first()->pivot->is_favorite;
     }
+
+    // playing games
+    public function addPlayTime(Game $game, int $minutesPlayed)
+    {
+        $this->games()->updateExistingPivot($game, ['play_time' => DB::raw('play_time + ' . $minutesPlayed)]);
+    }
+
+    public function isPlaying($game = null): bool
+    {
+        if ($game) {
+            return $this->currently_playing === $game->id;
+        }
+
+        return $this->currently_playing !== null;
+    }
+
+    public function startPlaying(Game $game)
+    {
+        if ($this->isPlaying()) {
+            $msg = $this->stopPlaying();
+        }
+
+        $this->update(['currently_playing' => $game->id, 'started_playing_at' => now()]);
+
+        return ["You started playing {$game->name}.", $msg ?? null];
+    }
+
+    public function stopPlaying()
+    {
+        if (!$this->isPlaying()) {
+            throw new \Exception('You are not playing this game.');
+        }
+
+        $game = Game::find($this->currently_playing);
+        $minutesPlayed = now()->diffInMinutes($this->started_playing_at);
+
+        $this->addPlayTime($game, $minutesPlayed);
+
+        $this->update(['currently_playing' => null, 'started_playing_at' => null]);
+
+        return "You stopped playing {$game->name}. You played for {$minutesPlayed} minutes.";
+    }
+
+
 
     // public function play(Game $game, int $playTime)
     // {

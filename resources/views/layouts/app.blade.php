@@ -49,9 +49,15 @@
                 <x-alert-box type="success" class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ session('success_message') }}
                 </x-alert-box>
-            @elseif (session('error_message'))
+            @endif
+            @if (session('error_message'))
                 <x-alert-box type="error" class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ session('error_message') }}
+                </x-alert-box>
+            @endif
+            @if (session('info_message'))
+                <x-alert-box type="info" class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ session('info_message') }}
                 </x-alert-box>
             @endif
 

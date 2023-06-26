@@ -72,4 +72,29 @@ class LibraryController extends Controller
 
         return redirect()->back()->with('success_message', 'You have successfully unfavorited this game.');
     }
+
+    public function play(Request $request)
+    {
+        $user = Auth()->user();
+
+        $game = Game::find($request->game);
+        try {
+            $msg = $user->startPlaying($game);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error_message', $e->getMessage());
+        }
+
+        return redirect()->back()->with('success_message', $msg[0])->with('info_message', $msg[1]);
+    }
+
+    public function stop(Request $request)
+    {
+        $user = Auth::user();
+
+        $game = Game::find($request->game);
+
+        $user->stopPlaying();
+
+        return redirect()->back()->with('success_message', 'You have successfully stopped playing this game.');
+    }
 }
