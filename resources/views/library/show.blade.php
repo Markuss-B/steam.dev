@@ -25,7 +25,6 @@
                     <p id="gamehours">
                         @if ($game->pivot->play_time > 60)
                             {{ $game->pivot->play_time / 60 }} hours
-                            
                         @else
                             {{ $game->pivot->play_time }} minutes
                         @endif

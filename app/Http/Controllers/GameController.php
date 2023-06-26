@@ -149,7 +149,7 @@ class GameController extends Controller
             }
     
             // check if the search term matches any developer names
-            $developer = Developer::where('name', $searchTerm)->first();
+            $developer = Developer::where('name', 'like', '%' . $searchTerm . '%')->first();
             if($developer) {
                 $query->orWhereHas('developers', function ($query) use ($developer) {
                     $query->where('name', $developer->name);
