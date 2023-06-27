@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('currently_playing')->nullable();
-            $table->timestamp('started_playing_at')->nullable();
+        Schema::table('game_user', function (Blueprint $table) {
+            $table->timestamp('last_played')->nullable();
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('currently_playing');
-            $table->dropColumn('started_playing_at');
+        Schema::table('game_user', function (Blueprint $table) {
+            $table->dropColumn('last_played');
         });
     }
 };

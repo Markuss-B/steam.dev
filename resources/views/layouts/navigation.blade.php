@@ -57,8 +57,12 @@
 
                     <x-slot name="content">
                         @if (Auth::check())
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('profile.show')">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('Edit Profile') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -122,8 +126,13 @@
             @endif
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link :href="route('profile.show')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+
+                {{-- edit profile --}}
+                <x-responsive-nav-link :href="route('profile.edit')">
+                    {{ __('Edit Profile') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

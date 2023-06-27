@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tag;
+use App\Models\User;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,15 @@ class RouteServiceProvider extends ServiceProvider
             }
 
             return Tag::where('name', $value)->firstOrFail();
+        });
+
+        // Custom binding for User model
+        Route::bind('user', function ($value) {
+            if (is_numeric($value)) {
+                return User::findOrFail($value);
+            }
+
+            return User::where('name', $value)->firstOrFail();
         });
 
         $this->routes(function () {

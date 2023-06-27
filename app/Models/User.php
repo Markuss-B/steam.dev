@@ -62,7 +62,8 @@ class User extends Authenticatable
     public function games()
     {
         return $this->belongsToMany(Game::class)
-            ->withPivot('play_time', 'acquisition_date', 'is_favorite')
+            ->using(GameUser::class)
+            ->withPivot('play_time', 'acquisition_date', 'is_favorite', 'purchase_cost', 'last_played')
             ->withTimestamps();
     }
 
@@ -169,7 +170,35 @@ class User extends Authenticatable
 
         $this->update(['currently_playing' => null, 'started_playing_at' => null]);
 
+        // last played in the pivot
+        $this->games()->updateExistingPivot($game, ['last_played' => now()]);
+
         return "You stopped playing {$game->name}. You played for {$minutesPlayed} minutes.";
+    }
+
+    public function lastPlayed($game)
+    {
+        return $this->games->where('id', $game->id)->first()->pivot->last_played;
+    }
+
+    public function lastPlayedGame()
+    {
+        // either current playing or last played
+        if ($this->currently_playing) {
+            return Game::find($this->currently_playing);
+        } else {
+            return $this->games->sortByDesc('pivot.last_played')->first();
+        }
+    }
+
+    public function playTime(Game $game): int
+    {
+        return $this->games->where('id', $game->id)->first()->pivot->play_time;
+    }
+
+    public function acquired(Game $game)
+    {
+        return $this->games->where('id', $game->id)->first()->pivot->acquisition_date;
     }
 
 

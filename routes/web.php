@@ -27,15 +27,15 @@ Route::get('/store', [StoreController::class, 'index'])->name('store');
 Route::get('/dashboard', [AdminController::class, 'index'])->middleware(['auth', 'verified', 'role:admin|developer'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // user
-    Route::get('/users', [ProfileController::class, 'index'])->name('users.index');
-    Route::get('/users/{user}', [ProfileController::class, 'show'])->name('users.show');
-
+    
 });
+// other users
+Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show');
 
 // Games
 Route::get('/games', [GameController::class, 'index'])->name('games.index');

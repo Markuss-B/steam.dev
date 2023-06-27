@@ -38,7 +38,8 @@ class Game extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
-            ->withPivot('play_time', 'acquisition_date', 'is_favorite')
+            ->using(GameUser::class)
+            ->withPivot('play_time', 'acquisition_date', 'is_favorite', 'purchase_cost', 'last_played')
             ->withTimestamps();
     }
 
