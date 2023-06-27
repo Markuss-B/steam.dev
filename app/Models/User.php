@@ -22,6 +22,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar',
+        'description',
         'password',
         'balance',
         'currently_playing',
@@ -76,6 +78,17 @@ class User extends Authenticatable
     public function removeGame(Game $game)
     {
         $this->games()->detach($game);
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        if ($this->avatar) {
+            return asset('storage/' . $this->avatar);
+        }
+    
+        // // Return default avatar if none is set
+        // return asset('images/default-avatar.png');
+        return null;
     }
 
     public function addMoney(int $amount)

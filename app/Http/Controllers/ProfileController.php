@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -37,7 +38,7 @@ class ProfileController extends Controller
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
+    {   
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
@@ -47,6 +48,34 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    /**
+     * Update the user's profile avatar.
+     */
+    public function updateAvatar(Request $request): RedirectResponse
+    {
+        $user = Auth::user();
+
+        // Validate the avatar upload
+        $data = $request->validate([
+            'avatar' => ['image', 'nullable'],
+        ]);
+
+        // Handle the user's avatar upload
+        if ($request->hasFile('avatar')) {
+            // Delete the old avatar from storage
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            // Store the new avatar
+            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+        };
+
+        $user->update($data);
+
+        return Redirect::route('profile.edit')->with('status', 'avatar-updated');
     }
 
     /**

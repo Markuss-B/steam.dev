@@ -25,7 +25,9 @@
 
         <div>
             <x-input-label for="description" :value="__('Description')" />
-            <x-text-area-input id="description" name="description" type="text" class="mt-1 block w-full resize" :value="old('description', $user->description)" required autofocus autocomplete="description" />
+            <x-text-area-input id="description" name="description" type="text" class="mt-1 block w-full resize" required autofocus autocomplete="description">
+                {{ old('description', $user->description) }}
+            </x-text-area-input>
             <x-input-error class="mt-2" :messages="$errors->get('description')" />
         </div>
 

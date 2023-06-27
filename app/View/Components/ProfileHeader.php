@@ -5,6 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileHeader extends Component
 {
@@ -20,7 +21,7 @@ class ProfileHeader extends Component
     )
     {
         $this->name = $user->name;
-        $this->avatar = $user->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&color=7F9CF5&background=EBF4FF';
+        $this->avatar = $user->avatar ? Storage::url($user->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&color=7F9CF5&background=EBF4FF';
         $this->description = $user->description ?? 'This user is hiding something...';
     }
 
