@@ -19,6 +19,7 @@ class ProfileUpdateRequest extends FormRequest
             // names must be unique, but the current user's name is allowed
             'name' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'description' => ['string', 'max:1000'],
         ];
     }
 }
