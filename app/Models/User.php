@@ -57,7 +57,7 @@ class User extends Authenticatable
     // Avatar
     public function getAvatarUrlAttribute(): string
     {
-        return $this->avatar ? Storage::url($this->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&color=7F9CF5&background=EBF4FF';
+        return $this->avatar ? Storage::url($this->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF';
     }
 
     // Friends
@@ -169,6 +169,7 @@ class User extends Authenticatable
         return $game->developers->intersect($this->developers)->isNotEmpty();
     }
 
+    // games in common
     public function commonGames(User $user)
     {
         return $this->games->intersect($user->games);
@@ -177,6 +178,17 @@ class User extends Authenticatable
     public function hasGamesInCommonWith(User $user): bool
     {
         return $this->commonGames($user)->isNotEmpty();
+    }
+
+    // friends with game
+    public function friendsWithGame(Game $game)
+    {
+        return $this->friends->filter(function ($friend) use ($game) {
+            return $friend->games->contains($game);
+        })
+        ->sortByDesc(function ($friend) use ($game) {
+            return $friend->isPlaying($game);
+        });
     }
 
     // Games
@@ -199,6 +211,7 @@ class User extends Authenticatable
         $this->games()->detach($game);
     }
 
+    // balance
     public function addMoney(int $amount)
     {
         $this->balance += $amount;
@@ -265,6 +278,11 @@ class User extends Authenticatable
         }
 
         return $this->currently_playing !== null;
+    }
+
+    public function activeGame()
+    {
+        return $this->belongsTo(Game::class, 'currently_playing');
     }
 
     public function startPlaying(Game $game)

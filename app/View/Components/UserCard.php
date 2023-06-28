@@ -11,6 +11,7 @@ class UserCard extends Component
 {
     public string $name;
     public $avatar;
+    public $activeGame;
 
     /**
      * Create a new component instance.
@@ -21,6 +22,7 @@ class UserCard extends Component
     {
         $this->name = $user->name;
         $this->avatar = $user->getAvatarUrlAttribute();
+        $this->activeGame = $user->activeGame;
     }
 
     /**

@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    // Nosaka aktīvo bildīti
+    // //Nosaka aktīvo bildīti
     // var imgs_c = document.getElementById("images");
     // console.log(imgs_c)
     // var imgs = imgs_c.getElementsByTagName("img");
@@ -31,16 +31,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
     //     });
     // }
 
-    function showMedia(imgs) {
-        // Get the media container
-        var media = document.getElementById("media-container");
-        media.innerHTML = "";
-        // Create img element to append src otherwise element dissapears for some reason
-        var img = document.createElement("img");
-        img.src = imgs.src;
-        // Use the same src in container as the image from the grid
-        media.append(img);
-    }
+    // function showMedia(imgs) {
+    //     // Get the media container
+    //     var media = document.getElementById("media-container");
+    //     media.innerHTML = "";
+    //     // Create img element to append src otherwise element dissapears for some reason
+    //     var img = document.createElement("img");
+    //     img.src = imgs.src;
+    //     // Use the same src in container as the image from the grid
+    //     media.append(img);
+    // }
 
     // Aizver sidemenu
     function closeBar() {
