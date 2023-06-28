@@ -21,16 +21,15 @@
                 <div class="max-w-fill">
                     {{-- Discounted games --}}
                     <h2 class="text-2xl font-semibold mb-4">Discounted games</h2>
-                    <x-scroller.container id="discountedGames" :data="$discountedGames" view="games" :loadOnButtonPress="true" 
-                        data-url="{{ route('get.store.discounts', ['perPage' => 5]) }}" />
+                    <x-scroller.container id="discountedGames" :data="$discountedGames" view="games" :loadOnButtonPress="true" />
                     {{-- New games --}}
                     <h2 class="text-2xl font-semibold mb-4">New games</h2>
-                    <x-scroller.container id="newGames" :data="$newGames" view="games" :loadOnButtonPress="true" 
-                        data-url="{{ route('get.store.new', ['perPage' => 5]) }}" />
+                    <x-scroller.container id="newGames" :data="$newGames" view="games" :loadOnButtonPress="true" />
+                    {{-- Top rated --}}
                     {{-- Top sellers --}}
                     <h2 class="text-2xl font-semibold mb-4">Top sellers</h2>
-                    <x-scroller.container id="topSellers" :data="$topSellers" view="games" :loadOnButtonPress="true" 
-                        data-url="{{ route('get.store.top', ['perPage' => 5]) }}" />
+                    <x-scroller.container id="topSellers" :data="$topSellers" view="games" :loadOnButtonPress="true" />
+                    {{-- Top rated --}}
                 </div>
             </div>
         </div>

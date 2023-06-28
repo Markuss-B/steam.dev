@@ -1,7 +1,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         let container = $('#{{ $id }}-scroller');
-        let nextPageUrl = container.data('url'); // Retrieve the URL from data attribute
+        let nextPageUrl = '{{ $data->nextPageUrl() }}';
+        console.log(nextPageUrl);
         let loadOnButtonPress = {{ $loadOnButtonPress ? 'true' : 'false' }};
 
         if (loadOnButtonPress) {
@@ -21,18 +22,27 @@
             });
         }
 
+        // clearScroller();
+        // function clearScroller() {
+        //     container.empty();
+        //     loadMoreData();
+        // }
+
         function loadMoreData() {
             $.ajax({
                 url: nextPageUrl,
                 type: 'get',
                 beforeSend: function () {
                     nextPageUrl = '';
+                    $('#{{ $id }}-scroller-button').html('Loading...');
                 },
                 success: function (data) {
                     nextPageUrl = data.nextPageUrl;
                     container.append(data.view);
                     if (!nextPageUrl) {
                         $('#{{ $id }}-scroller-button').remove();
+                    } else {
+                        $('#{{ $id }}-scroller-button').html('Load more');
                     }
                 },
                 error: function (xhr, status, error) {

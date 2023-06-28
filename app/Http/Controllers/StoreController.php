@@ -17,18 +17,20 @@ class StoreController extends Controller
         $games = Game::all();
         $tags = Tag::orderBy('name')->get();
 
-        $count = 5;
-        $discountedGames = Store::getDiscountedGames($count);
-        $newGames = Store::getNewGames($count);
-        $topSellers = Store::getTopSellers($count);
+        $perPage = 3;
+        $discountedGames = Store::getDiscountedGames($perPage);
+        $newGames = Store::getNewGames($perPage);
+        $topSellers = Store::getTopSellers($perPage);
+
+        $discountedGames->setPath(route('get.store.discounts', ['perPage' => $perPage]));
+        $newGames->setPath(route('get.store.new', ['perPage' => $perPage]));
+        $topSellers->setPath(route('get.store.top', ['perPage' => $perPage]));
 
         return view('store.index', compact('games', 'tags', 'discountedGames', 'newGames', 'topSellers'));
     }
 
-    public function getDiscounts(Request $request): JsonResponse
+    public function getDiscounts($perPage = 5): JsonResponse
     {
-        $perPage = $request->input('perPage' , 10);
-
         $discountedGames = Store::getDiscountedGames($perPage);
 
         $view = view('components.scroller.load', ['view' => 'games', 'data' => $discountedGames])->render();
@@ -36,10 +38,8 @@ class StoreController extends Controller
         return Response::json(['view' => $view, 'nextPageUrl' => $discountedGames->nextPageUrl()]);
     }
 
-    public function getNew(Request $request): JsonResponse
+    public function getNew($perPage = 5): JsonResponse
     {
-        $perPage = $request->input('perPage' , 10);
-
         $newGames = Store::getNewGames($perPage);
 
         $view = view('components.scroller.load', ['view' => 'games', 'data' => $newGames])->render();
@@ -47,10 +47,8 @@ class StoreController extends Controller
         return Response::json(['view' => $view, 'nextPageUrl' => $newGames->nextPageUrl()]);
     }
 
-    public function getTopSellers(Request $request): JsonResponse
+    public function getTopSellers($perPage = 5): JsonResponse
     {
-        $perPage = $request->input('perPage' , 10);
-
         $topSellers = Store::getTopSellers($perPage);
 
         $view = view('components.scroller.load', ['view' => 'games', 'data' => $topSellers])->render();

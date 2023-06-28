@@ -88,9 +88,9 @@ Route::middleware('auth')->group(function () {
 
 // Store
 Route::middleware('ajax')->group(function () {
-    Route::get('/get/store/discounts', [StoreController::class, 'getDiscounts'])->name('get.store.discounts');
-    Route::get('/get/store/new', [StoreController::class, 'getNew'])->name('get.store.new');
-    Route::get('/get/store/top', [StoreController::class, 'getTopSellers'])->name('get.store.top');
+    Route::get('/get/store/discounts/{perPage}', [StoreController::class, 'getDiscounts'])->name('get.store.discounts');
+    Route::get('/get/store/new/{perPage}', [StoreController::class, 'getNew'])->name('get.store.new');
+    Route::get('/get/store/top/{perPage}', [StoreController::class, 'getTopSellers'])->name('get.store.top');
 });
 Route::middleware(['auth'])->group(function () {
     Route::post('/games/{game}/purchase', [StoreController::class, 'purchase'])->name('game.purchase');

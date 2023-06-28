@@ -16,7 +16,6 @@ class container extends Component
         public $data,
         public string $id = '',
         public bool $loadOnButtonPress = false,
-        public $dataUrl = null,
     )
     {
         if (!$id)
@@ -28,7 +27,6 @@ class container extends Component
         $this->view = $view;
         $this->data = $data;
         $this->loadOnButtonPress = $loadOnButtonPress;
-        $this->dataUrl = $dataUrl;
     }
 
     /**
@@ -40,8 +38,6 @@ class container extends Component
             'id' => $this->id,
             'view' => $this->view,
             'data' => $this->data,
-            'loadOnButtonPress' => $this->loadOnButtonPress,
-            'dataUrl' => $this->dataUrl,
         ]);
     }
 }
