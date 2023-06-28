@@ -211,6 +211,12 @@ class User extends Authenticatable
         $this->games()->detach($game);
     }
 
+    // categories
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
     // balance
     public function addMoney(int $amount)
     {

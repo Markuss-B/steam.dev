@@ -35,6 +35,12 @@ class Game extends Model
         return $this->attributes['header'] ? asset('storage/' . $this->attributes['header']) : asset('img/header/' . $this->id . '.jpg');
     }
 
+    // categories
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
     public function developers(): BelongsToMany
     {
         return $this->belongsToMany(Developer::class);
