@@ -20,6 +20,21 @@ class Game extends Model
         'distributor_id',
     ];
 
+    public function getIconAttribute(): string
+    {
+        return $this->attributes['icon'] ? asset('storage/' . $this->attributes['icon']) : asset('img/icon/' . $this->id . '.jpg');
+    }
+
+    public function getLibraryHeroAttribute(): string
+    {
+        return $this->attributes['library_hero'] ? asset('storage/' . $this->attributes['library_hero']) : asset('img/library_hero/' . $this->id . '.jpg');
+    }
+
+    public function getHeaderAttribute(): string
+    {
+        return $this->attributes['header'] ? asset('storage/' . $this->attributes['header']) : asset('img/header/' . $this->id . '.jpg');
+    }
+
     public function developers(): BelongsToMany
     {
         return $this->belongsToMany(Developer::class);
