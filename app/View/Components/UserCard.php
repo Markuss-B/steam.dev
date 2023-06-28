@@ -20,7 +20,7 @@ class UserCard extends Component
     )
     {
         $this->name = $user->name;
-        $this->avatar = $user->avatar ? Storage::url($user->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&color=7F9CF5&background=EBF4FF';
+        $this->avatar = $user->getAvatarUrlAttribute();
     }
 
     /**

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Staudenmeir\LaravelMergedRelations\Eloquent\HasMergedRelationships;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -52,6 +53,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Avatar
+    public function getAvatarUrlAttribute(): string
+    {
+        return $this->avatar ? Storage::url($this->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&color=7F9CF5&background=EBF4FF';
+    }
 
     // Friends
     public function friendsTo()
@@ -190,17 +197,6 @@ class User extends Authenticatable
     public function removeGame(Game $game)
     {
         $this->games()->detach($game);
-    }
-
-    public function getAvatarUrlAttribute()
-    {
-        if ($this->avatar) {
-            return asset('storage/' . $this->avatar);
-        }
-    
-        // // Return default avatar if none is set
-        // return asset('images/default-avatar.png');
-        return null;
     }
 
     public function addMoney(int $amount)

@@ -59,7 +59,7 @@ class ProfileController extends Controller
 
         // Validate the avatar upload
         $data = $request->validate([
-            'avatar' => ['image', 'nullable'],
+            'avatar' => ['image', 'nullable', 'max:5000'],
         ]);
 
         // Handle the user's avatar upload
