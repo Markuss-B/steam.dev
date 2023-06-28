@@ -1,0 +1,33 @@
+<?php
+
+namespace App\View\Components;
+
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
+use Illuminate\Support\Facades\Storage;
+
+class UserCard extends Component
+{
+    public string $name;
+    public $avatar;
+
+    /**
+     * Create a new component instance.
+     */
+    public function __construct(
+        public $user,
+    )
+    {
+        $this->name = $user->name;
+        $this->avatar = $user->avatar ? Storage::url($user->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&color=7F9CF5&background=EBF4FF';
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
+    {
+        return view('components.user-card');
+    }
+}

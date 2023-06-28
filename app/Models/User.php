@@ -9,10 +9,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Staudenmeir\LaravelMergedRelations\Eloquent\HasMergedRelationships;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+    use HasMergedRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -50,6 +53,105 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // Friends
+    public function friendsTo()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id')
+            ->withPivot('status')
+            ->withTimestamps();
+    }
+
+    public function friendsFrom()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'friend_id', 'user_id')
+            ->withPivot('status')
+            ->withTimestamps();
+    }
+
+    public function pendingFriendsTo()
+    {
+        return $this->friendsTo()->where('status', 'pending');
+    }
+
+    public function pendingFriendsFrom()
+    {
+        return $this->friendsFrom()->where('status', 'pending');
+    }
+
+    public function acceptedFriendsTo()
+    {
+        return $this->friendsTo()->where('status', 'accepted');
+    }
+
+    public function acceptedFriendsFrom()
+    {
+        return $this->friendsFrom()->where('status', 'accepted');
+    }
+
+    public function declinedFriendsTo()
+    {
+        return $this->friendsTo()->where('status', 'declined');
+    }
+
+    public function friends()
+    {
+        return $this->mergedRelationWithModel(User::class, 'friends_view');
+    }
+
+    public function unfriend(User $user)
+    {
+        $this->friendsTo()->detach($user);
+        $this->friendsFrom()->detach($user);
+    }
+    
+
+    public function sendFriendRequest(User $recipient)
+    {
+        $this->pendingFriendsTo()->attach($recipient);
+    }
+
+    public function acceptFriendRequest(User $sender)
+    {
+        $this->friendsFrom()->updateExistingPivot($sender, ['status' => 'accepted']);
+    }
+
+    public function declineFriendRequest(User $sender)
+    {
+        $this->friendsFrom()->detach($sender);
+    }
+
+    public function cancelFriendRequest(User $recipient)
+    {
+        $this->pendingFriendsTo()->detach($recipient);
+    }
+
+    public function isFriendsWith(User $user): bool
+    {
+        return $this->acceptedFriendsTo->contains($user) || $this->acceptedFriendsFrom->contains($user);
+    }
+
+    public function hasSentFriendRequestTo(User $user): bool
+    {
+        return $this->pendingFriendsTo->contains($user);
+    }
+
+    public function hasReceivedFriendRequestFrom(User $user): bool
+    {
+        return $this->pendingFriendsFrom->contains($user);
+    }
+
+    public function isPendingFriendRequestFrom(User $user): bool
+    {
+        return $this->pendingFriendsFrom->contains($user);
+    }
+
+    public function hasDeclinedFriendRequestFrom(User $user): bool
+    {
+        return $this->friendsFrom->where('pivot.status', 'declined')->contains($user);
+    }
+
+
+    // developers
     public function developers()
     {
         return $this->belongsToMany(Developer::class);
@@ -59,7 +161,17 @@ class User extends Authenticatable
     {
         return $game->developers->intersect($this->developers)->isNotEmpty();
     }
+
+    public function commonGames(User $user)
+    {
+        return $this->games->intersect($user->games);
+    }
     
+    public function hasGamesInCommonWith(User $user): bool
+    {
+        return $this->commonGames($user)->isNotEmpty();
+    }
+
     // Games
     public function games()
     {

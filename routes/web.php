@@ -8,6 +8,8 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FriendshipsController;
+use App\Models\Friendships;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    
+    // friendships
+    Route::get('/friends', [FriendshipsController::class, 'index'])->name('friendships.index');
+    Route::post('/friends/{recipient}', [FriendshipsController::class, 'sendFriendRequest'])->name('sendFriendRequest');
+    Route::delete('/friends/{recipient}/cancel', [FriendshipsController::class, 'cancelFriendRequest'])->name('cancelFriendRequest');
+    Route::patch('/friends/{sender}/accept', [FriendshipsController::class, 'acceptFriendRequest'])->name('acceptFriendRequest');
+    Route::delete('/friends/{sender}/decline', [FriendshipsController::class, 'declineFriendRequest'])->name('declineFriendRequest');
+    Route::delete('/friends/{friend}/unfriend', [FriendshipsController::class, 'unfriend'])->name('unfriend');
 });
 // other users
 Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show');

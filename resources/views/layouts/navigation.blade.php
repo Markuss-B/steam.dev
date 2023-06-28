@@ -26,6 +26,11 @@
                         {{ __('Library') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link class="text-xl" :href="route('friendships.index')" :active="request()->routeIs('friendships.index')">
+                        {{ __('Friends') }}
+                    </x-nav-link>
+                </div>
 
             </div>
 
@@ -35,9 +40,11 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @if (Auth::check())
                 <div>
-                    {{ Auth::user()->balance / 100 }}€
+                    <a href="{{ route('balance') }}" class="text-xl">
+                        {{ Auth::user()->balance / 100 }}€
+                    </a>
                 </div>
-            @endif
+                @endif
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
