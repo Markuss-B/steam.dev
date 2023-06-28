@@ -1,6 +1,6 @@
 <div id="parallax">
-    <img src="https://placehold.it/500x500" alt="">
-    <img class="flip" src="https://placehold.it/500x500" alt="">
+    <img src="{{ $game->library_hero }}" alt="">
+    <img class="flip" src="{{ $game->library_hero }}" alt="">
 </div>
 <div class="content">
     <div class="header">
@@ -24,7 +24,7 @@
                     <h3>Play time</h3>
                     <p id="gamehours">
                         @if ($game->pivot->play_time > 60)
-                            {{ $game->pivot->play_time / 60 }} hours
+                            {{ number_format($game->pivot->play_time / 60, 2) }} hours
                         @else
                             {{ $game->pivot->play_time }} minutes
                         @endif

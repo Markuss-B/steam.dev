@@ -22,7 +22,7 @@ class Game extends Model
 
     public function getIconAttribute(): string
     {
-        return $this->attributes['icon'] ? asset('storage/' . $this->attributes['icon']) : asset('img/icon/' . $this->id . '.jpg');
+        return $this->attributes['icon'] ? asset('storage/' . $this->attributes['icon']) : asset('img/icons/' . $this->id . '.jpg');
     }
 
     public function getLibraryHeroAttribute(): string

@@ -34,7 +34,7 @@
                 @foreach ($games as $game)
                     <li class="game-l" data-id="{{ $game->id }}">
                         <span class="icon">
-                            <img src="https://placehold.it/20x20" alt="{{ $game->name }} icon">
+                            <img src="{{ $game->icon }}" alt="">
                         </span>
                         <span class="name">{{ $game->name }}</span>
                     </li>
