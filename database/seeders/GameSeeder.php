@@ -16,7 +16,7 @@ class GameSeeder extends Seeder
      */
     public function run(): void
     {
-        $file = fopen('database\seeders\csvfiles\games.csv', 'r');
+        $file = fopen('database/seeders/csvfiles/games.csv', 'r');
         $data = fgetcsv($file);
 
         while (($data = fgetcsv($file)) !== false) {
