@@ -9,7 +9,12 @@
             {{ $game->name }}
         </a>
     </td>
-    <td>€{{ $game->price / 100 }}</td>
+        @if ($game->discount == 0)
+            <td>€{{ $game->price / 100 }}</td>
+        @else
+            <td><span class="line-through">€{{ number_format($game->price / 100 * 100 / (100 - $game->discount), 2) }}</span> €{{ $game->price / 100 }}</td>
+        @endif
+    </td>
     <td>{{ $game->discount }}%</td>
     <td>{{ $game->release_date }}</td>
     <td>

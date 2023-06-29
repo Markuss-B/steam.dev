@@ -134,31 +134,56 @@ class GameController extends Controller
     {
         // Start the query
         $query = Game::query();
+        $searchTerm = $request->input('search');
+        // Normalize the search term to handle hyphens/spaces interchangeably
+        $normalizedSearchTerm = str_replace(['-', ' '], ['%', '%'], $searchTerm);
     
-        $query->where(function($query) use ($request) {
-            $searchTerm = $request->input('search');
-            // Normalize the search term to handle hyphens/spaces interchangeably
-            $normalizedSearchTerm = str_replace(['-', ' '], ['%', '%'], $searchTerm);
-            $query->where('name', 'like', '%' . $normalizedSearchTerm . '%');
-        
-            // check if the search term matches any tag names
-            $tag = Tag::where('name', 'like', '%' . $normalizedSearchTerm . '%')->first();
-            if($tag) {
-                $query->orWhereHas('tags', function ($query) use ($tag) {
-                    $query->where('name', $tag->name);
-                });
-            }
-        
-            // check if the search term matches any developer names
-            $developer = Developer::where('name', 'like', '%' . $normalizedSearchTerm . '%')->first();
-            if($developer) {
-                $query->orWhereHas('developers', function ($query) use ($developer) {
-                    $query->where('name', $developer->name);
-                });
-            }
-        });
+        $query->where('name', 'like', '%' . $normalizedSearchTerm . '%');
     
-        // Check if any tag checkboxes are checked
+        $query = $this->selectSearch($query, $request);
+        
+        $devsQuery = null;
+        // check if the search term matches any developer names
+        // if it does, add the games with that developer to the results
+        $developer = Developer::where('name', 'like', '%' . $normalizedSearchTerm . '%')->first();
+        if ($developer)
+        {
+            $devsQuery = Game::query();
+            $devsQuery->whereHas('developers', function ($query) use ($developer) {
+                $query->where('name', $developer->name);
+            });
+            $devsQuery = $this->selectSearch($devsQuery, $request);
+
+            $games = $query->union($devsQuery);
+        }
+
+        $tagsQuery = null;
+        // check if the search term matches any tag names
+        $tag = Tag::where('name', 'like', '%' . $normalizedSearchTerm . '%')->first();
+        // if it does, add the games with that tag to the results
+        if ($tag)
+        {
+            $tagsQuery = Game::query();
+            $tagsQuery->whereHas('tags', function ($query) use ($tag) {
+                $query->where('name', $tag->name);
+            });
+            $tagsQuery = $this->selectSearch($tagsQuery, $request);
+            $games = $query->union($tagsQuery);
+        }
+    
+
+        // Get the results and pass them to the view
+        $games = $games->paginate(10);
+    
+        $tags = Tag::all()->sortBy('name');
+    
+        $request->flash();
+    
+        return view('games.search', ['games' => $games, 'tags' => $tags]);
+    }
+    
+    public function selectSearch($query, $request)
+    {
         if ($request->filled('tags')) {
             $query->whereHas('tags', function ($query) use ($request) {
                 $query->whereIn('name', $request->input('tags'));
@@ -175,16 +200,7 @@ class GameController extends Controller
             $sort = $request->input('sort');
             $query->orderBy($sort, ($request->input('order')) ? 'desc' : 'asc');
         }
-    
-        // Get the results and pass them to the view
-        $games = $query->paginate(10);
-    
-        $tags = Tag::all()->sortBy('name');
-    
-        $request->flash();
-    
-        return view('games.search', ['games' => $games, 'tags' => $tags]);
+        return $query;
     }
-    
     
 }

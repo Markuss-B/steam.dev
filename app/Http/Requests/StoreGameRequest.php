@@ -29,8 +29,6 @@ class StoreGameRequest extends FormRequest
             'release_date' => 'nullable|date',
             'developers' => 'required|array',
             'developers.*' => 'required|integer|exists:developers,id',
-            'publishers' => 'required|array',
-            'publishers.*' => 'required|integer|exists:publishers,id',
         ];
     }
 }
