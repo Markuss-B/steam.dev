@@ -29,6 +29,10 @@ class StoreGameRequest extends FormRequest
             'release_date' => 'nullable|date',
             'developers' => 'required|array',
             'developers.*' => 'required|integer|exists:developers,id',
+            // icon, library_hero and header
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'library_hero' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'header' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

@@ -13,4 +13,10 @@
             @endif
         @endforeach
     @endforeach
+    @hasrole('developer')
+        <h2 class="text-2xl font-semibold text-gray-800">You are developer of</h2>
+        @foreach (Auth::user()->developers as $developer)
+            <x-dev-card :dev="$developer" />
+        @endforeach
+    @endhasrole
 </x-app-layout>

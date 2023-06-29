@@ -5,7 +5,7 @@
         <img src="https://picsum.photos/500/500" alt="Placeholder Image" class="object-cover rounded-t-lg">
     </div> --}}
     <div class="game-card-image">
-        <img src="{{ $game->getHeaderAttribute() }}" alt="{{ $game->id}} header image" class="object-cover rounded-t-lg">
+        <img src="{{ $game->getHeaderAttribute() }}" alt="{{ $game->id}} header image" class="object-cover rounded-t-lg" style="height: 120px">
     </div>
     <div class="flex justify-between w-full bg-black bg-opacity-80 p-4 h-full group-hover:bg-blue-950 group-hover:bg-opacity-100 transition-colors duration-300">
         <h3 class="text-l text-white">{{ $game->name }}</h3>

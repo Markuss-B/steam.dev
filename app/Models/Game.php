@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 
 class Game extends Model
 {
@@ -18,22 +19,44 @@ class Game extends Model
         'release_date',
         'developer_id',
         'distributor_id',
+        'icon',
+        'library_hero',
+        'header',
     ];
-
-    public function getIconAttribute(): string
-    {
-        return $this->attributes['icon'] ? asset('storage/' . $this->attributes['icon']) : asset('img/icons/' . $this->id . '.jpg');
-    }
-
-    public function getLibraryHeroAttribute(): string
-    {
-        return $this->attributes['library_hero'] ? asset('storage/' . $this->attributes['library_hero']) : asset('img/library_hero/' . $this->id . '.jpg');
-    }
 
     public function getHeaderAttribute(): string
     {
-        return $this->attributes['header'] ? asset('storage/' . $this->attributes['header']) : asset('img/header/' . $this->id . '.jpg');
+        if ($this->attributes['header'] && Storage::disk('public')->exists($this->attributes['header'])) {
+            return Storage::url($this->attributes['header']);
+        } elseif (file_exists(public_path('img/header/' . $this->id . '.jpg'))) {
+            return asset('img/header/' . $this->id . '.jpg');
+        } else {
+            return 'https://picsum.photos/500/225';
+        }
     }
+    
+    public function getIconAttribute(): string
+    {
+        if ($this->attributes['icon'] && Storage::disk('public')->exists($this->attributes['icon'])) {
+            return Storage::url($this->attributes['icon']);
+        } elseif (file_exists(public_path('img/icon/' . $this->id . '.jpg'))) {
+            return asset('img/icon/' . $this->id . '.jpg');
+        } else {
+            return 'https://picsum.photos/500/500';
+        }
+    }
+    
+    public function getLibraryHeroAttribute(): string
+    {
+        if ($this->attributes['library_hero'] && Storage::disk('public')->exists($this->attributes['library_hero'])) {
+            return Storage::url($this->attributes['library_hero']);
+        } elseif (file_exists(public_path('img/library_hero/' . $this->id . '.jpg'))) {
+            return asset('img/library_hero/' . $this->id . '.jpg');
+        } else {
+            return 'https://picsum.photos/500/500';
+        }
+    }
+    
 
     // categories
     public function categories(): BelongsToMany

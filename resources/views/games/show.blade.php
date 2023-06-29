@@ -1,4 +1,14 @@
 <x-app-layout title="{{ $game->name }}" :basiclayout='true'>
+    <x-slot name="header">
+        <div class="flex ">
+        {{-- icon --}}
+        <img src="{{ $game->icon }}" alt="{{ $game->name }} icon" class="w-10 rounded-lg shadow-lg">
+        {{-- name --}}
+        <h2 class="text-2xl font-semibold text-gray-800 leading-tight ml-4">
+            {{ $game->name }}
+        </h2>
+        </div>
+    </x-slot>
     @auth
         @hasrole('admin')
             <a href="{{ route('games.edit', $game->id) }}">
@@ -27,7 +37,7 @@
         @endhasrole
     @endauth
 
-
+    <img src="{{ $game->header }}" alt="{{ $game->name }} header" class="h-64 w-auto">
     <h2 class="text-xl">{{ $game->name }}</h2>
     <p>Release Date: {{ $game->release_date }}</p>
     <p>Developers:

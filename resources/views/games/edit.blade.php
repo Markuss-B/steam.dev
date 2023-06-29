@@ -3,11 +3,28 @@
     <br>
     <a href="{{ route('games.show', $game->id) }}" class="underline text-blue-500">Back to {{ $game->name }}</a>
 
-    <form action="{{ route('games.update', $game->id) }}" method="POST" class="mt-6 space-y-6">
+    <form action="{{ route('games.update', $game->id) }}" method="POST" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         <div class="space-y-4">
+            <div>
+                <x-input-label for="icon" :value="__('Icon')" />
+                <x-file-input id="icon" name="icon" class="mt-1 block w-full"  />
+                <x-input-error class="mt-2" :messages="$errors->get('icon')" />
+            </div>
+
+            <div>
+                <x-input-label for="library_hero" :value="__('Library Hero')" />
+                <x-file-input id="library_hero" name="library_hero" class="mt-1 block w-full"  />
+                <x-input-error class="mt-2" :messages="$errors->get('library_hero')" />
+            </div>
+
+            <div>
+                <x-input-label for="header" :value="__('Header')" />
+                <x-file-input id="header" name="header" class="mt-1 block w-full"  />
+                <x-input-error class="mt-2" :messages="$errors->get('header')" />
+            </div>
             <div>
                 <x-input-label for="name" :value="__('Name')" />
                 <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="$game->name" required autofocus autocomplete="name" />

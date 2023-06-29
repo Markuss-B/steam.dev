@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateGameRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 
 class GameController extends Controller
@@ -61,6 +62,22 @@ class GameController extends Controller
         // Store the publishers
         $game->publishers()->sync($request->input('publishers'));
 
+        // icon, library_hero, header
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('icons', 'public');
+            $game->icon = $iconPath;
+        }
+        if ($request->hasFile('library_hero')) {
+            $libraryHeroPath = $request->file('library_hero')->store('library_heroes', 'public');
+            $game->library_hero = $libraryHeroPath;
+        }
+        if ($request->hasFile('header')) {
+            $headerPath = $request->file('header')->store('headers', 'public');
+            $game->header = $headerPath;
+        }
+
+        $game->save();
+
         return redirect()->route('games.show', ['game' => $game->id])->with('success_message', 'Game ' . $game->name . ' successfully created.');
     }
 
@@ -107,6 +124,34 @@ class GameController extends Controller
 
         // Update the tags
         $game->tags()->sync($request->input('tags'));
+
+        // icon, library_hero, header
+        if ($request->hasFile('icon')) {
+            // Delete the old icon
+            if ($game->icon) {
+                Storage::disk('public')->delete($game->icon);
+            }
+            $iconPath = $request->file('icon')->store('icons', 'public');
+            $game->icon = $iconPath;
+        }
+        if ($request->hasFile('library_hero')) {
+            // Delete the old library_hero
+            if ($game->library_hero) {
+                Storage::disk('public')->delete($game->library_hero);
+            }
+            $libraryHeroPath = $request->file('library_hero')->store('library_heroes', 'public');
+            $game->library_hero = $libraryHeroPath;
+        }
+        if ($request->hasFile('header')) {
+            // Delete the old header
+            if ($game->header) {
+                Storage::disk('public')->delete($game->header);
+            }
+            $headerPath = $request->file('header')->store('headers', 'public');
+            $game->header = $headerPath;
+        }
+
+        $game->save();
 
         return redirect()->route('games.show', ['game' => $game->id])->with('success_message', 'Game ' . $game->name . ' successfully updated.');
     }

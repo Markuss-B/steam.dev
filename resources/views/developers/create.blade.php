@@ -1,30 +1,33 @@
-<x-layout title="Create new developer">
-    <form action="{{ route('developers.store') }}" method="POST">
+<x-app-layout title="Create New Developer" basiclayout='true'>
+    <a href="{{ route('developers.index') }}" class="underline text-blue-500">Back to developers</a>
+
+    <form action="{{ route('developers.store') }}" method="POST" class="mt-6 space-y-6">
         @csrf
-        <div>
-            <label for="name">Name</label>
-            <input id="name" type="text" name="name" value="{{ old('name') }}"
-            class="@error('name') is-invalid @enderror">
-            @error('name')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+
+        <div class="space-y-4">
+            <div>
+                <x-input-label for="name" :value="__('Name')" />
+                <x-text-input id="name" name="name" type="text" class="mt-1 block" :value="old('name')" required autofocus autocomplete="name" />
+                <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            </div>
+
+            <div>
+                <x-input-label for="founded_at" :value="__('Founded At')" />
+                <x-text-input id="founded_at" name="founded_at" type="date" class="mt-1 block" :value="old('founded_at')" required />
+                <x-input-error class="mt-2" :messages="$errors->get('founded_at')" />
+            </div>
+
+            <div>
+                <x-input-label for="description" :value="__('Description')" />
+                <x-text-area-input id="description" name="description" class="mt-1 block w-full resize" required>
+                    {{ old('description') }}
+                </x-text-area-input>
+                <x-input-error class="mt-2" :messages="$errors->get('description')" />
+            </div>
         </div>
-        <div>
-            <label for="founded_at">Founded At</label>
-            <input id="founded_at" type="date" name="founded_at" value="{{ old('founded_at') }}"
-            class="@error('founded_at') is-invalid @enderror">
-            @error('founded_at')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+
+        <div class="flex items-center gap-4">
+            <x-primary-button>{{ __('Create') }}</x-primary-button>
         </div>
-        <div>
-            <label for="description">Description</label>
-            <textarea id="description" name="description" cols="30" rows="10"
-            class="@error('description') is-invalid @enderror">{{ old('description') }}</textarea>
-            @error('description')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        <button type="submit">Create</button>
     </form>
-    <a href="{{ route('developers.index') }}">Back to developers</a>
-</x-layout>
+</x-app-layout>
