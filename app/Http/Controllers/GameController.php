@@ -141,7 +141,7 @@ class GameController extends Controller
         $query->where('name', 'like', '%' . $normalizedSearchTerm . '%');
     
         $query = $this->selectSearch($query, $request);
-        
+        $games = $query;
         $devsQuery = null;
         // check if the search term matches any developer names
         // if it does, add the games with that developer to the results
