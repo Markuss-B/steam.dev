@@ -1,33 +1,41 @@
-<x-layout title="Edit developer {{ $developer->name }}">
-    <a href="{{ route('developers.index') }}">Back to developers</a>
-    <br>
-    <a href="{{ route('developers.show', $developer->id) }}">Back to {{ $developer->name }}</a>
-    <form action="{{ route('developers.update', $developer->id) }}" method="POST">
+<x-app-layout title="Edit Developer {{ $developer->name }}" basiclayout='true'>
+    <section class="space-y-4">
+        <div>
+            <a href="{{ route('developers.index') }}" class="underline text-blue-500">{{ __('Back to developers') }}</a>
+        </div>
+        <div>
+            <a href="{{ route('developers.show', $developer->id) }}" class="underline text-blue-500">{{ __('Back to') }} {{ $developer->name }}</a>
+        </div>
+    </section>
+
+    <form action="{{ route('developers.update', $developer->id) }}" method="POST" class="mt-6 space-y-6">
         @csrf
         @method('PUT')
-        <div>
-            <label for="name">Name</label>
-            <input id="name" type="text" name="name" value="{{ $developer->name }}"
-            class="@error('name') is-invalid @enderror">
-            @error('name')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+
+        <div class="space-y-4">
+            <div>
+                <x-input-label for="name" :value="__('Name')" />
+                <x-text-input id="name" name="name" type="text" class="mt-1 block" :value="old('name', $developer->name)" required autofocus autocomplete="name" />
+                <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            </div>
+
+            <div>
+                <x-input-label for="founded_at" :value="__('Founded At')" />
+                <x-text-input id="founded_at" name="founded_at" type="date" class="mt-1 block" :value="old('founded_at', $developer->founded_at)" required />
+                <x-input-error class="mt-2" :messages="$errors->get('founded_at')" />
+            </div>
+
+            <div>
+                <x-input-label for="description" :value="__('Description')" />
+                <x-text-area-input id="description" name="description" type="text" class="mt-1 block w-full resize" required>
+                    {{ old('description', $developer->description) }}
+                </x-text-area-input>
+                <x-input-error class="mt-2" :messages="$errors->get('description')" />
+            </div>
         </div>
-        <div>
-            <label for="founded_at">Founded At</label>
-            <input id="founded_at" type="date" name="founded_at" value="{{ $developer->founded_at }}"
-            class="@error('founded_at') is-invalid @enderror">
-            @error('founded_at')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+
+        <div class="flex items-center gap-4">
+            <x-primary-button>{{ __('Update') }}</x-primary-button>
         </div>
-        <div>
-            <label for="description">Description</label>
-            <textarea id="description" name="description" cols="30" rows="10"
-            class="@error('description') is-invalid @enderror">{{ $developer->description }}</textarea>
-            @error('description')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        <button type="submit">Update</button>
     </form>
-</x-layout>
+</x-app-layout>
