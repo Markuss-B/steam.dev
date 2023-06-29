@@ -28,5 +28,5 @@
     <h2 class="text-2xl font-semibold text-black">
         {{ __('Developers') }}
     </h2>
-    <x-scroller.container :view="'developers'" :data="$developers" />
+    <x-scroller.container :view="'developers'" :data="$developers" :id="'developers'" :loadOnButtonPress="false" />
 </x-app-layout>
