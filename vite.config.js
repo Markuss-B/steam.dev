@@ -9,7 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/bootstrap.js',
                 'resources/js/library.js',
-                'reources/css/library.css'
+                'resources/css/library.css'
             ],
             refresh: true,
         }),
