@@ -21,8 +21,8 @@ class AdminController extends Controller
             }
 
             $parts = explode('.', $permission);
-            $modelName = ucfirst($parts[0]); // Capitalize the first character
-            $action = ucfirst($parts[1]); // Capitalize the first character
+            $modelName = $parts[0];
+            $action = $parts[1];
     
             if (!isset($models[$modelName])) {
                 $models[$modelName] = [];

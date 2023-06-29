@@ -1,13 +1,18 @@
 <x-app-layout title="Developers" :basiclayout='true'>
+    @hasrole('admin')
+        <x-slot name="header">
+            <div class="flex justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Developers') }}
+                </h2>
+                <a href="{{ route('developers.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    {{ __('Create New Developer') }}
+                </a>
+            </div>
+        </x-slot>
+    @endhasrole
     {{-- create new developer --}}
     @auth
-        @if (Auth::user()->hasPermissionTo('developers.create'))
-        <a href="{{ route('developers.create') }}">
-            <x-primary-button class="mb-4">
-                {{ __('Create New Developer') }}
-            </x-primary-button>
-        </a>
-        @endif
         @hasrole('developer')
             <h2 class="text-2xl font-semibold text-black">
                 {{ __('You are a developer of') }}

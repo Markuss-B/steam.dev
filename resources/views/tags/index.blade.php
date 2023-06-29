@@ -1,14 +1,16 @@
 <x-app-layout title="Tags" :basiclayout='true'>
-    {{-- create new tag --}}
-    @auth
-        @hasrole('admin')
-            <a href="{{ route('tags.create') }}">
-                <x-primary-button class="mb-4">
-                    {{ __('Create new tag') }}
-                </x-primary-button>
+    @hasrole('admin')
+    <x-slot name="header">
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Tags') }}
+            </h2>
+            <a href="{{ route('tags.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                {{ __('Create New Tag') }}
             </a>
-        @endhasrole
-    @endauth
+        </div>
+    </x-slot>
+    @endhasrole
     <ul>
         @foreach ($tags as $tag)
             <li>
