@@ -38,6 +38,7 @@ class container extends Component
             'id' => $this->id,
             'view' => $this->view,
             'data' => $this->data,
+            'loadOnButtonPress' => $this->loadOnButtonPress,
         ]);
     }
 }
