@@ -2,6 +2,11 @@
 {{-- also use user-card and in the slot define the forms for accepting/declining friendships --}}
 <x-app-layout title="Friendships" :basiclayout='false'>
     <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <form action="{{ route('users.index') }}" method="GET">
+            <x-search-bar />
+        </form>
+        </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-6 gap-6">
             <div class="col-span-4">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

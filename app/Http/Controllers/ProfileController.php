@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+    public function index(Request $request)
+    {
+        $search = $request->get('search');
+        if($search) {
+            $users = User::where('name', 'like', '%' . $search . '%')->paginate(15);
+        } else {
+            $users = User::paginate(15);
+        }
+        
+        return view('profile.index', ['users' => $users]);
+    }
+    
+
     public function show($user = null)
     {
         if ($user === null) {

@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/friends/{friend}/unfriend', [FriendshipsController::class, 'unfriend'])->name('unfriend');
 });
 // other users
+Route::get('/users', [ProfileController::class, 'index'])->name('users.index');
 Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show');
 
 // Games
