@@ -62,7 +62,7 @@ class TagController extends Controller
     public function edit(Tag $tag)
     {
         // authorize user
-        $this->authorize('update', Tag::class);
+        $this->authorize('update', $tag);
 
         // edit a tag
         $games = Game::all();

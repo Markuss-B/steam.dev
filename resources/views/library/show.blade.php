@@ -52,14 +52,16 @@
         </ul>
     </div>
 
+    @if (Auth::user()->friendsWithGame($game)->count() > 0)
     <div class="friends">
         <h2>Friends who own this game</h2>
         <div class="flex flex-row">
             @foreach (Auth::user()->friendsWithGame($game) as $friend)
                 <x-user-card class="max-w-32 border ml-4" :user="$friend" />
             @endforeach
-        </div>
+        </div>    
     </div>
+    @endif
 
     <div class="about">
         <div class="info">

@@ -37,14 +37,14 @@
         <div>
             <label for="developers">Developers</label>
             <select name="developers[]" multiple>
-                @foreach ($developers as $developer)
-                    <option value="{{ $developer->id }}">
-                        {{ $developer->name }}
+                @foreach ($developers as $dev)
+                    <option value="{{ $dev->id }}" {{ $developer->id == $dev->id ? 'selected' : '' }}>
+                        {{ $dev->name }}
                     </option>
                 @endforeach
             </select>
         </div>
-        <div>
+        {{-- <div>
             <label for="publishers">Publishers</label>
             <select name="publishers[]" multiple>
                 @foreach ($publishers as $publisher)
@@ -53,7 +53,7 @@
                     </option>
                 @endforeach
             </select>
-        </div>
+        </div> --}}
         <button type="submit">Save</button>
     </form>
 </x-layout>

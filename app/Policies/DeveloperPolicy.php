@@ -37,7 +37,11 @@ class DeveloperPolicy
      */
     public function update(User $user, Developer $developer): bool
     {
-        return $user->hasPermissionTo('developers.edit');
+        if ($user->hasPermissionTo('developers.edit'))
+            return true;
+
+        if ($user->hasPermissionTo('own_developers.edit') && $developer->users->contains($user))
+            return true;
     }
 
     /**

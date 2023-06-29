@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Developer;
 use App\Models\Game;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -29,7 +30,11 @@ class GamePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('games.create');
+        if ($user->hasPermissionTo('games.create'))
+            return true;
+
+        if ($user->hasPermissionTo('own_games.create'))
+            return true;
     }
 
     /**

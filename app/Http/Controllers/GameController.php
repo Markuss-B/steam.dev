@@ -135,26 +135,28 @@ class GameController extends Controller
         // Start the query
         $query = Game::query();
     
-        $searchTerm = $request->input('search');
-        // Normalize the search term to handle hyphens/spaces interchangeably
-        $normalizedSearchTerm = str_replace(['-', ' '], ['%', '%'], $searchTerm);
-        $query->where('name', 'like', '%' . $normalizedSearchTerm . '%');
-    
-        // check if the search term matches any tag names
-        $tag = Tag::where('name', 'like', '%' . $normalizedSearchTerm . '%')->first();
-        if($tag) {
-            $query->orWhereHas('tags', function ($query) use ($tag) {
-                $query->where('name', $tag->name);
-            });
-        }
-    
-        // check if the search term matches any developer names
-        $developer = Developer::where('name', 'like', '%' . $normalizedSearchTerm . '%')->first();
-        if($developer) {
-            $query->orWhereHas('developers', function ($query) use ($developer) {
-                $query->where('name', $developer->name);
-            });
-        }
+        $query->where(function($query) use ($request) {
+            $searchTerm = $request->input('search');
+            // Normalize the search term to handle hyphens/spaces interchangeably
+            $normalizedSearchTerm = str_replace(['-', ' '], ['%', '%'], $searchTerm);
+            $query->where('name', 'like', '%' . $normalizedSearchTerm . '%');
+        
+            // check if the search term matches any tag names
+            $tag = Tag::where('name', 'like', '%' . $normalizedSearchTerm . '%')->first();
+            if($tag) {
+                $query->orWhereHas('tags', function ($query) use ($tag) {
+                    $query->where('name', $tag->name);
+                });
+            }
+        
+            // check if the search term matches any developer names
+            $developer = Developer::where('name', 'like', '%' . $normalizedSearchTerm . '%')->first();
+            if($developer) {
+                $query->orWhereHas('developers', function ($query) use ($developer) {
+                    $query->where('name', $developer->name);
+                });
+            }
+        });
     
         // Check if any tag checkboxes are checked
         if ($request->filled('tags')) {

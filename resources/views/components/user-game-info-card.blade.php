@@ -19,7 +19,7 @@
                 </p>
                 <p>
                     Playtime: @if ($play_time > 120)
-                        {{ $play_time / 60 }} hours
+                        {{ number_format($play_time / 60, 2) }} hours
                     @else
                         {{ $play_time }} minutes
                     @endif

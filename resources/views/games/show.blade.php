@@ -1,21 +1,50 @@
 <x-app-layout title="{{ $game->name }}" :basiclayout='true'>
+    @auth
+        @hasrole('admin')
+            <a href="{{ route('games.edit', $game->id) }}">
+                <x-primary-button class="mb-4">
+                    {{ __('Edit Game') }}
+                </x-primary-button>
+            </a>
+            <form action="{{ route('games.destroy', $game->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <x-primary-button class="mb-4">
+                    {{ __('Delete Game') }}
+                </x-primary-button>
+            </form>
+        @endhasrole
+        @hasrole('developer')
+            @foreach (Auth::user()->developers as $developer)
+                @if ($developer->isDeveloperOf($game))
+                    <a href="{{ route('developers.games.edit', ['developer' => $developer->id, 'game' => $game->id]) }}">
+                        <x-primary-button class="mb-4">
+                            {{ __('Edit Game as') }} {{ $developer->name }}
+                        </x-primary-button>
+                    </a>
+                @endif
+            @endforeach
+        @endhasrole
+    @endauth
+
 
     <h2 class="text-xl">{{ $game->name }}</h2>
     <p>Release Date: {{ $game->release_date }}</p>
     <p>Developers:
         @foreach ($game->developers as $developer)
-            <a href="{{ route('developers.show', ['developer' => $developer->id]) }}">
+            <a href="{{ route('developers.show', ['developer' => $developer->id]) }}" class="underline hover:text-blue-500">
                 {{ $developer->name }}</a>@if (!$loop->last), @endif
         @endforeach
     </p>
-    <p>Publishers:
+    {{-- <p>Publishers:
         @foreach ($game->publishers as $publisher)
             {{ $publisher->name }}@if (!$loop->last), @endif
         @endforeach
-    </p>
+    </p> --}}
     <p>Tags:
         @foreach ($game->tags as $tag)
-            {{ $tag->name }}@if (!$loop->last), @endif
+            <a href="{{ route('tags.show', ['tag' => $tag->id]) }}" class="underline hover:text-blue-500">
+                {{ $tag->name }}</a>@if (!$loop->last), @endif
         @endforeach
     </p>
     {{-- purchase --}}

@@ -25,4 +25,19 @@ class Developer extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function makeDeveloper(User $user)
+    {
+        $this->users()->attach($user);
+    }
+
+    public function removeDeveloper(User $user)
+    {
+        $this->users()->detach($user);
+    }
+
+    public function isDeveloperOf(Game $game): bool
+    {
+        return $this->games->contains($game);
+    }
 }

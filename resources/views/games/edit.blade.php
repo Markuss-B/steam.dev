@@ -43,14 +43,13 @@
                     <option value="{{ $developer->id }}"
                         @if ($game->developers->contains($developer->id))
                             selected
-                        @endif
-                    >
+                        @endif>
                         {{ $developer->name }}
                     </option>
                 @endforeach
             </select>
         </div>
-        <div>
+        {{-- <div>
             <label for="publishers">Publishers</label>
             <select name="publishers[]" multiple>
                 @foreach ($publishers as $publisher)
@@ -63,7 +62,7 @@
                     </option>
                 @endforeach
             </select>
-        </div>
+        </div> --}}
         <div>
             <label for="tags">Tags</label>
             <select name="tags[]" multiple>

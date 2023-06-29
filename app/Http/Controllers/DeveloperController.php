@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Developer;
 use App\Http\Requests\StoreDeveloperRequest;
 use App\Http\Requests\UpdateDeveloperRequest;
+use App\Models\Game;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Contracts\View\View;
@@ -41,6 +43,27 @@ class DeveloperController extends Controller
 
         // show the create form
         return view('developers.create');
+    }
+
+    public function createGame(Developer $developer)
+    {
+        // authorize user
+        $this->authorize('create', Game::class);
+
+        // show the create form
+        $developers = Developer::where('id', $developer->id)->get();
+        return view('games.create', compact('developers', 'developer'));
+    }
+
+    public function editGame(Developer $developer, Game $game)
+    {
+        // authorize user
+        $this->authorize('update', $game);
+
+        // show the edit form
+        $developers = Developer::where('id', $developer->id)->get();
+        $tags = Tag::orderBy('name')->get();
+        return view('games.edit', compact('developers', 'developer', 'game', 'tags'));
     }
 
     /**

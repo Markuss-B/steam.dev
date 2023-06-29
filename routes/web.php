@@ -65,6 +65,8 @@ Route::get('/developers/{developer}', [DeveloperController::class, 'show'])->nam
 Route::get('/developers/{developer}/edit', [DeveloperController::class, 'edit'])->name('developers.edit');
 Route::put('/developers/{developer}/update', [DeveloperController::class, 'update'])->name('developers.update');
 Route::delete('/developers/{developer}/destroy', [DeveloperController::class, 'destroy'])->name('developers.destroy');
+Route::get('/developers/{developer}/games/create', [DeveloperController::class, 'createGame'])->name('developers.games.create');
+Route::get('/developers/{developer}/games/{game}/edit', [DeveloperController::class, 'editGame'])->name('developers.games.edit');
 
 // Tags
 Route::get('/tags', [TagController::class, 'index'])->name('tags.index');

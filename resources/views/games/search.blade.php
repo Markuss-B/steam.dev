@@ -13,9 +13,9 @@
     <label for="order">Descending</label>
     
 
-    
+    <div class="flex flex-col">
+    <input type="text" id="tagSearch" placeholder="Search tags...">
     <div class="tags-container h-64 overflow-x-hidden float-right">
-        <input type="text" id="tagSearch" placeholder="Search tags...">
         <div id="tagClones"></div>
         <div id="tagList">
             @foreach($tags as $tag)
@@ -26,20 +26,24 @@
             @endforeach
         </div>
     </div>
+    </div>
 
-    <button type="submit">Search</button>
+    <x-primary-button>Search</x-primary-button>
 </form>
 
-<table>
+<table class="table-auto border-separate border-spacing-2">
     <thead>
         <tr>
+            <th></th>
             <th>Game</th>
             <th>Price</th>
             <th>Discount</th>
             <th>Release Date</th>
             <th>Developer</th>
-            <th>Publisher</th>
-            <th>Actions</th>
+            {{-- <th>Publisher</th> --}}
+            @hasrole('admin')
+                <th>Actions</th>
+            @endhasrole
         </tr>
     </thead>
     <tbody>
@@ -54,6 +58,16 @@
 
 <script>
     $(document).ready(function(){
+      // check for checked elements and put them on top
+      $("#tagList .tag-checkbox input[type='checkbox']:checked").each(function() {
+        var checkedItem = $(this).parent('.tag-checkbox');
+        var clone = checkedItem.clone(true);
+        var cloneID = $(this).attr("id") + "-clone";
+        clone.attr("id", cloneID);
+        $("#tagClones").prepend(clone);
+      });
+
+
       $("#tagSearch").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#tagList .tag-checkbox").filter(function() {

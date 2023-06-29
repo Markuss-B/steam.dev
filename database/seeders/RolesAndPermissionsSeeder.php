@@ -17,25 +17,11 @@ class RolesAndPermissionsSeeder extends Seeder
         // forget cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $roleHierarchy = [
-            'guest' => [],
-            'user' => ['guest'],
-            'developer' => ['guest', 'user'],
-            'admin' => ['guest', 'user', 'developer'],
-        ];
-
         // Define permissions for each role
         $rolePermissions = [
-            'guest' => [
-                'games.index',
-                'games.show',
-                'developers.index',
-                'developers.show',
-                'tags.index',
-                'tags.show',
-            ],
-            'user' => [],
             'developer' => [
+                'own_developers.edit',
+                'own_games.create',
                 'own_games.edit',
             ],
             'admin' => [
@@ -58,22 +44,11 @@ class RolesAndPermissionsSeeder extends Seeder
             // delete current permissions if there are any
             $role->permissions()->detach();
 
-            // Add permissions for this role and all roles lower in the hierarchy
-            foreach ($roleHierarchy[$roleName] as $lowerRoleName) {
-                $permissions = array_merge($permissions, $rolePermissions[$lowerRoleName]);
-            }
-
-            // Remove duplicates and create permissions
-            $permissions = array_unique($permissions);
-
+            // Add permissions for this role 
             foreach ($permissions as $permission) {
                 Permission::firstOrCreate(['name' => $permission]);
                 $role->givePermissionTo($permission);
             }
         }
-
-        // Finally, give all permissions to the admin
-        $admin = Role::findByName('admin');
-        $admin->givePermissionTo(Permission::all());
     }
 }
