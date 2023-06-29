@@ -1,9 +1,9 @@
 <x-app-layout title="Library">
     <x-slot name="styles">
-        @vite('resources/css/library.css')
+        <link rel="stylesheet" href="{{ asset('css/library.css') }}">
     </x-slot>
     <x-slot name="scripts">
-        @vite('resources/js/library.js')
+        <script src="{{ asset('js/library.js') }}" defer></script>
     </x-slot>
     <div class="sidemenu">
         <div class="header">
