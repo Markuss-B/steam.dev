@@ -17,5 +17,5 @@
         <x-search-bar />
     </form>
     {{-- list of games --}}
-    <x-scroller.container :view="'games'" :data="$games" />
+    <x-scroller.container :view="'games'" :data="$games" loadon/>
 </x-app-layout>
