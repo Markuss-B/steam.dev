@@ -20,6 +20,11 @@
             @endif
         @endhasanyrole
         @hasrole('admin')
+            <a href="{{ route('developers.users', $developer->id) }}">
+                <x-primary-button class="mb-4">
+                    {{ __('Manage Users') }}
+                </x-primary-button>
+            </a>
             <form action="{{ route('developers.destroy', $developer->id) }}" method="POST">
                 @csrf
                 @method('DELETE')

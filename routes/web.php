@@ -108,10 +108,18 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-// make admin, developer
-Route::patch('/make/admin/{user}', [AdminController::class, 'makeAdmin'])->middleware(['auth', 'verified', 'role:admin|developer'])->name('make.admin');
-Route::patch('/make/developer/{user}', [AdminController::class, 'makeDeveloper'])->middleware(['auth', 'verified', 'role:admin'])->name('make.developer');
-// remove admin, developer
-Route::patch('/remove/admin/{user}', [AdminController::class, 'removeAdmin'])->middleware(['auth', 'verified', 'role:admin'])->name('remove.admin');
-Route::patch('/remove/developer/{user}', [AdminController::class, 'removeDeveloper'])->middleware(['auth', 'verified', 'role:admin'])->name('remove.developer');
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    // make admin, developer
+    Route::patch('/make/admin/{user}', [AdminController::class, 'makeAdmin'])->name('make.admin');
+    Route::patch('/make/developer/{user}', [AdminController::class, 'makeDeveloper'])->name('make.developer');
+    // remove admin, 
+    Route::patch('/remove/admin/{user}', [AdminController::class, 'removeAdmin'])->name('remove.admin');
+    Route::patch('/remove/developer/{user}', [AdminController::class, 'removeDeveloper'])->name('remove.developer');
+    // make user a developer developers.remove-user
+    Route::delete('/developers/{developer}/remove-user/{user}', [DeveloperController::class, 'removeUser'])->name('developers.remove-user');
+    Route::post('/developers/{developer}/add-user/{user}', [DeveloperController::class, 'addUser'])->name('developers.add-user');
+
+    Route::get('/developers/{developer}/users', [DeveloperController::class, 'users'])->name('developers.users');
+});
+
 require __DIR__.'/auth.php';

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreDeveloperRequest;
 use App\Http\Requests\UpdateDeveloperRequest;
 use App\Models\Game;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Contracts\View\View;
@@ -128,4 +129,48 @@ class DeveloperController extends Controller
 
         return redirect()->route('developers.index')->with('success_message', 'Developer ' . $developer->name . ' successfully deleted.');
     }
+
+    public function addUser(Developer $developer, User $user)
+    {
+        // authorize user
+        $this->authorize('update', $developer);
+
+        if (!$user->hasRole('developer')) {
+            return redirect()->back()->with('error_message', 'User ' . $user->name . ' does not have the developer role.');
+        }
+
+        // check if user is already added
+        if ($developer->users->contains($user)) {
+            return redirect()->back()->with('error_message', 'User ' . $user->name . ' is already added to developer ' . $developer->name . '.');
+        }
+
+        // add user to developer
+        $developer->users()->attach($user);
+
+        return redirect()->back()->with('success_message', 'User ' . $user->name . ' successfully added to developer ' . $developer->name . '.');
+    }
+
+    public function removeUser(Developer $developer, User $user)
+    {
+        // authorize user
+        $this->authorize('update', $developer);
+
+        // check if user is not
+        if (!$developer->users->contains($user)) {
+            return redirect()->back()->with('error_message', 'User ' . $user->name . ' is not added to developer ' . $developer->name . '.');
+        }
+
+        // remove user from developer
+        $developer->users()->detach($user);
+
+        return redirect()->back()->with('success_message', 'User ' . $user->name . ' successfully removed from developer ' . $developer->name . '.');
+    }
+
+    public function users(Developer $developer)
+    {
+        $users = User::orderBy('name')->paginate(25);
+
+        return view('developers.users', compact('users', 'developer'));
+    }
+
 }

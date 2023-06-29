@@ -74,6 +74,12 @@ class AdminController extends Controller
         if (!$user->hasRole('developer')) {
             return redirect()->back()->with('error_message', $user->name . ' is not a developer.');
         }
+
+        // if user is developer for any developer remove them
+        foreach ($user->developers as $developer) {
+            $developer->users()->detach($user);
+        }
+
         $user->removeRole('developer');
         return redirect()->back()->with('success_message', $user->name . ' is no longer a developer.');
     }
