@@ -30,6 +30,21 @@
             </div>
         </div>
         <div class="game-container">
+            @foreach (Auth::user()->categories as $category)
+                <div class="category">
+                    <div class="category-name">{{ $category->name }}</div>
+                    <ul>
+                        @foreach ($category->games as $game)
+                            <li class="game-l" data-id="{{ $game->id }}">
+                                <span class="icon">
+                                    <img src="{{ $game->icon }}" alt="">
+                                </span>
+                                <span class="name">{{ $game->name }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endforeach
             <ul id="gamelist">
                 @foreach ($games as $game)
                     <li class="game-l" data-id="{{ $game->id }}">
@@ -47,6 +62,7 @@
             <button>&#9776;</button>
         </div>
         <div id="game" class="screen"></div>
+        @include('library.home');
     </div>
 </x-app-layout>
 

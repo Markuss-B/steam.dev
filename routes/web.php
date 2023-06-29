@@ -8,6 +8,7 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FriendshipsController;
 use App\Models\Friendships;
 
@@ -84,6 +85,10 @@ Route::middleware('auth')->group(function () {
     // playing games
     Route::post('/library/{game}/play', [LibraryController::class, 'play'])->name('library.play');
     Route::post('/library/{game}/stop', [LibraryController::class, 'stop'])->name('library.stop');
+
+    // categories
+    Route::get('/library/categories', [CategoryController::class, 'categories'])->name('category.index');
+    Route::resource('categories', CategoryController::class);
 });
 
 // Store

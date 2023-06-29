@@ -61,8 +61,24 @@ window.addEventListener('DOMContentLoaded', (event) => {
     var hamburger_s = document.getElementById("hamBtn");
     hamburger_s.addEventListener("click", openBar);
 
+
+    function showThis(id) {
+        console.log("Showing " + id + " screen");
+        var x = document.getElementsByClassName("screen");
+        for (var i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(id).style.display = "block";
+    }
+
     var homeBtn_s = document.getElementById("homeBtn");
-    homeBtn_s.addEventListener("click", function() {showThis('home');});
+    homeBtn_s.addEventListener("click", function() {
+        showThis('home');
+        // find .game-l with active
+        var active = document.getElementsByClassName("active");
+        // remove active
+        active[0].className = active[0].className.replace(" active", "");
+    });
 
     /*// sameklē spēli sarakstā
     function searchGame() {

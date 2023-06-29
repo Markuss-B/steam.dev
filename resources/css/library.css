@@ -472,8 +472,10 @@ img.avatar {
 }
 
 .screen#home {
-    height: 100%;
     background-image: linear-gradient(rgb(33, 45, 61), rgb(57, 75, 100), rgb(32, 44, 61));
+    position: relative;
+    width: 100%;
+    min-height: 100%;
 }
 
 /* Parallax */
