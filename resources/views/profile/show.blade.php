@@ -1,4 +1,57 @@
 <x-app-layout title="Your profile" :basiclayout='true'>
+    <x-slot name="header">
+        <div class="flex justify-between">
+        <h2 class="text-2xl font-semibold text-gray-800 leading-tight">
+            @if ($user->id == Auth::id())
+                Your profile
+            @else
+                {{ $user->name }}'s profile
+            @endif
+        </h2>
+
+        <div class="flex">
+        @hasrole('admin')
+            {{-- make an admin --}}
+            @if (!$user->hasRole('admin'))
+                <form action="{{ route('make.admin', $user) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
+                        Make admin
+                    </button>
+                </form>
+            @else
+                <form action="{{ route('remove.admin', $user) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                        Remove admin
+                    </button>
+                </form>
+            @endif
+            {{-- make developer --}}
+            @if (!$user->hasRole('developer'))
+                <form action="{{ route('make.developer', $user) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
+                        Make developer
+                    </button>
+                </form>
+            @else
+                <form action="{{ route('remove.developer', $user) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                        Remove developer
+                    </button>
+                </form>
+            @endif
+        @endhasrole
+        </div>
+        </div>
+    </x-slot>
+
     <x-profile-header :user="$user" />
 
     @auth
