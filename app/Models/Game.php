@@ -39,7 +39,7 @@ class Game extends Model
     {
         if ($this->attributes['icon'] && Storage::disk('public')->exists($this->attributes['icon'])) {
             return Storage::url($this->attributes['icon']);
-        } elseif (file_exists(public_path('img/icon/' . $this->id . '.jpg'))) {
+        } elseif (file_exists(public_path('img/icons/' . $this->id . '.jpg'))) {
             return asset('img/icon/' . $this->id . '.jpg');
         } else {
             return 'https://picsum.photos/500/500';
