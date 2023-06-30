@@ -17,7 +17,7 @@ class StoreController extends Controller
         $games = Game::all();
         $tags = Tag::orderBy('name')->get();
 
-        $perPage = 3;
+        $perPage = 5;
         $discountedGames = Store::getDiscountedGames($perPage);
         $newGames = Store::getNewGames($perPage);
         $topSellers = Store::getTopSellers($perPage);
