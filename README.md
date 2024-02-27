@@ -70,7 +70,9 @@ Set up laravel and database
 ## premade profiles
 login: admin@gmail.com
 password: admin
+
 login: developer@gmail.com
 password: developer
+
 login: parastais@gmail.com  
 password: parastais
