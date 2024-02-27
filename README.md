@@ -1,25 +1,76 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
 ## About this project
 This project is part of my Web Technologies 2 course at University of Latvia. It's a simple videogame library management website. You can create a profile buy games and view them in your library.
+
+## Functionality
+
+See the store
+Discounted games
+New games
+Top sellers
+
+Add money
+Buy games
+
+View your library
+"Play" games
+
+Make friends
+View friends profiles
+See what they play and compare libraries
+
+Search for games with filters
+you can type in search game names, developers, tags
+sort, filter by tags
+
+Search developers
+View developer profiles
+
+View purchase history
+
+Enjoy dynamic scrolling
+
+As an admin you can
+View admin panel
+CRUD for games, developers, tags
+Add and remove roles for users (developer, admin, user)
+
+As a developer you can
+CRUD for your developer games
+
+
+
+## How to run
+
+Setup WAMP.NET
+1. Set up nginx, php and mysql
+2. Create a site `steam.dev`
+3. Clone this project in to the document root.
+4. Change the document root to `public` folder
+5. Start the php, mysql and nginx servers
+
+Set up laravel and database
+1. Clone the repository
+2. Make sure you have installed
+    - PHP
+    - MySQL
+    - composer
+    - Node.js
+3. Run `composer install`
+4. Run `npm install`
+5. Create .env file from .env.example
+6. Set up your database
+    - Create a schema name it `steamdev`
+    - Create a user `steamdev` and grant all privileges to the schema
+7. Migrate the database with `php artisan migrate`
+8. Populate the database with `php artisan db:seed`
+9. Generate a key with `php artisan key:generate`
+10. Run `npm run dev`
+11. Open the website from WAMP.NET
+
+## premade profiles
+login: admin@gmail.com
+password: admin
+login: developer@gmail.com
+password: developer
+login: parastais@gmail.com  
+password: parastais

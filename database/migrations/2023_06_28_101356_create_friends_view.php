@@ -12,7 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropView('friends_view'	);
+        if (Schema::hasView('friends_view')) {
+            Schema::dropView('friends_view');
+        }
         Schema::createMergeView(
             'friends_view',
             [(new User)->acceptedFriendsTo(), (new User)->acceptedFriendsFrom()]
