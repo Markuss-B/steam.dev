@@ -1,0 +1,568 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #c6d4df;
+    width: 100%;
+}
+
+main {
+    min-height: 100vh;
+    position: relative;
+}
+
+.main {
+    width: auto;
+    margin-left: 400px;
+    transition: 0.5s;
+    z-index: -1;
+    height: 100%;
+    /* overflow: hidden; */
+}
+
+
+.main.closedside {
+    margin-left: 0;
+}
+
+.hamburger {
+    position: absolute;
+    z-index: 2;
+    background-color: rgb(62, 64, 71);
+    padding: 10px;
+}
+
+.hamburger:not(.closedside) {
+    display: none;
+}
+
+.hamburger button {
+    font-size: 20px;
+}
+
+.sidemenu .header.closedside {
+    display: block;
+}
+
+/* Sidemenu which contains the game list */
+.sidemenu {
+    background-color:rgb(25, 26, 27);
+    width: 400px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    transition: 0.5s;
+    z-index: 1;
+}
+
+.sidemenu.closedside {
+    width: 0;
+}
+
+/* Header for game list */
+.sidemenu .header {
+    display: block;
+    height: 150px;
+    margin: 5px;
+    overflow: hidden;
+}
+
+.sidemenu #buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.sidemenu .header .homeBtn {
+    font-size: 24px;
+}
+
+.sidemenu .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    font-size: 24px;
+    border-radius: 5px;
+    background-color: rgb(37, 49, 45);
+    color: #c6d4df;
+    margin: 5px;
+    cursor: pointer;
+    padding: 18px 0 18px 0;
+}
+
+.sidemenu .btn:hover {
+    background-color: rgb(62, 64, 71);
+}
+
+.homeBtn {
+    width: 60%;
+}
+
+.closeBtn {
+    width: 30%;
+}
+
+.sidemenu input {
+    background-color: rgb(36, 38, 43);
+    border: none;
+    outline: none;
+    color: #c6d4df;
+    font-size: 16px;
+}
+
+/* Game list search by input */
+.sidemenu #searchInput {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    font-size: 18px;
+    overflow: hidden;
+}
+
+/* Search hours */
+#hourssearch {
+    display: none;
+    width: 100%;
+    height: fit-content;
+}
+
+#hourssearch label {
+    display: block;
+    width: 100%;
+    margin: 2.5px 0 2.5px 0;
+}
+
+#hourssearch input {
+    width: 20%;
+}
+
+#hours_warning {
+    display: inline;
+    float: right;
+}
+
+.warning {
+    color: red;
+}
+
+
+/* Contains the list of games. Is scrollable because a library has a lot of games */
+.game-container {
+    display: block;
+    height: 84%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* Makes game list items feel like buttons */
+.game-container ul li {
+    display: flex;
+    align-items: center;
+    color: rgb(199, 213, 224);
+    font-size: 24px;
+    font-weight: 300;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* for hovering */
+.game-container ul li:not(.active):hover{
+    background-color: rgba(49, 58, 75);
+}
+
+.active {
+    background-color: rgb(60, 79, 104);
+}
+
+.game-container ul li.active:hover{
+    background-color: rgb(86, 112, 149);
+}
+
+
+/* Game icon image in the game list */
+.icon img{
+    display: block;
+    width: 50px;
+    max-width: 40px;
+    height: auto;
+}
+
+/* Game icon container in the game list*/
+.icon {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+/* Scrollbar. Hidden when not hovered on game list*/
+::-webkit-scrollbar {
+    width: 10px;
+    height: 15px;
+    display: none;
+}
+
+::-webkit-scrollbar {
+    display: block;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(95, 103, 116);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(122, 131, 146);
+}
+
+/* Game screen */
+.main .screen#game {
+    display: none;
+    width: 100%;
+    min-height: 100%;
+    background-image: linear-gradient(rgb(33, 45, 61), rgb(57, 75, 100), rgb(32, 44, 61));
+    overflow: hidden;
+    position: relative;
+}
+
+.screen#game .header {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    padding: 10px;
+}
+
+/* Plat button */
+.play {
+    display: block;
+    width: fit-content;
+}
+
+.play-btn{
+    font-size: 42px;
+    background-color: rgba(0, 179, 86, 1);
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px 100px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    border-radius: 5px;
+}
+
+.play-btn:hover {
+    background-color: rgba(85, 207, 62, 1);
+}
+
+/* Game time and achievements */
+.header .stats {
+    display: flex;
+    width: 50%;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.header .stats li {
+    display: flex;
+    color: rgba(155, 156, 160, 1);
+}
+
+.header h3 {
+    font-size: 22px;
+    text-transform: uppercase;
+}
+
+.header i {
+    font-weight: lighter;
+    display: block;
+    height: 100%;
+    width: fit-content;
+    font-size: 42px;
+    margin-right: 5px;
+}
+
+#achvbar {
+    background-color: black;
+    height: 10px;
+}
+
+/* navigation bar */
+.nav {
+    overflow: hidden;
+    background-color: rgba(42, 50, 58, .5);
+    display: block;
+    width: auto;
+    margin: 0 10px 0 10px;
+    border-radius: 2.5px;
+}
+
+.nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.nav ul li {
+    width: auto;
+    padding: 5px 15px;
+    text-align: center;
+    border-radius: 2.5px;
+}
+  
+.nav a {
+    display: block;
+    width: auto;
+    color: rgb(109, 114, 120);
+    text-align: center;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.nav .active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.nav li:hover {
+    background-color: rgba(64, 72, 85, 1);
+  }
+
+.nav li:hover a {
+    color: white;
+}
+
+/* Game info content */
+.about {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    height: auto;
+    padding: 5px;
+}
+
+.info {
+    display: block;
+    width: 300px;
+    height: 50%;
+    flex-grow: 1;
+    margin: 0 10px 0 10px;
+}
+
+.info h1{
+    font-size: 2em;
+    font-weight: bolder;
+}
+
+.info iframe {
+    width: 100%;
+    height: auto;
+}
+
+.main h2 {
+    font-size: 1.2em;
+}
+
+.line {
+    display: block;
+    margin: 5px 0 15px 0;
+    border-bottom: 3px solid gray;
+    width: auto;
+    height: 0px;
+}
+
+.line2 {
+    display: block;
+    margin: 5px 0 15px 0;
+    border-bottom: 2px solid rgba(180, 180, 180, 0.5);
+    width: auto;
+    height: 0px;
+}
+
+.media {
+    display: block;
+    margin-top: 16px;
+    margin: 13px 10px 0px 10px;
+    flex-grow: 1;
+    max-width: 720px;
+}
+
+#media-container {
+    max-height: 720px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#media-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.media #images {
+    margin-top: 2.5px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    height: 80px;
+}
+
+.media #images img {
+    display: inline;
+    width: auto;
+    max-width:100%;
+    max-height:100%;
+}
+
+.media #images img:hover, img.active {
+    opacity: 0.5;
+}
+
+/* Home screen login */
+
+.imgcontainer {
+    text-align: center;
+    position: relative;
+}
+
+img.avatar {
+    width: 40%;
+    max-width: 500px;
+}
+
+.logincontainer input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.logincontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    margin: 0 10px 0 10px;
+}
+
+.logincontainer .logincontent {
+    max-width: 500px;
+}
+
+.logincontainer button {
+    width: 96px;
+    height: 32px;
+    background-color: #4CAF50;
+    margin: 8px 0;
+    border: none;
+    border-radius: 2.5px;
+    cursor: pointer;
+}
+
+.logincontainer .container {
+    margin-top: 10px;
+}
+
+.screen#home {
+    background-image: linear-gradient(rgb(33, 45, 61), rgb(57, 75, 100), rgb(32, 44, 61));
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+}
+
+/* Parallax */
+#game .content {
+    border-top: 1px solid rgba(147, 157, 170, 0.2);
+    margin-top: 40vh;
+    min-height: 60vh;
+    backdrop-filter: blur(10px);
+    background-image: linear-gradient(rgba(59, 71, 90, 0.6), rgba(26, 33, 43, .9), rgba(32, 44, 61, 1));
+    position: relative;
+}
+
+#parallax {
+    display: block;
+    position: absolute;
+    width: 100%;
+}
+
+#parallax img {
+    width: 100%;
+    min-height: 40vh;
+    object-fit: cover;
+}
+
+#parallax img.flip {
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+}
+
+@media screen and (max-width: 900px) {
+    .sidemenu {
+        width: 90%;
+        opacity: 90%;
+    }
+    .main {
+        margin-left: 0px;
+    }
+    .hamburger {
+        display: block;
+    }
+    .screen .header {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .header .stats {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: space-around;
+    }
+    .logincontainer button {
+        width: 100%;
+    }
+    .sidemenu .header {
+        height: 170px;
+    }
+    .sidemenu input {
+        font-size: 24px;
+    }
+    .sidemenu #searchInput {
+        font-size: 28px;
+    }
+    .header {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .play {
+        width: 100%;
+    }
+    .play-btn {
+        display: block;
+        width: 100%;
+    }
+}
+
+@media print {
+    .sidemenu {
+        display: none;
+    }
+    .main {
+        margin: 0;
+    }
+    .flip {
+        display: none;
+    }
+    * {
+        page-break-inside: avoid;
+    }
+}
