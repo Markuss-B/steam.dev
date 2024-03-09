@@ -53,10 +53,15 @@
 
 ## Turning Off the Project
 
-- To stop and remove the Docker containers, run:
+- To stop the project, run the following command:
+  ```
+  docker-compose stop
+  ```
+- To remove the Docker containers, run:
   ```
   docker-compose down
   ```
+After running this command, you will need to run the project as if it were the first time.
 
 # How to Run the Project After the First Time
 
