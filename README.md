@@ -40,6 +40,7 @@ CRUD for your developer games
 
 
 ## How to run
+Check out the docker branch to only have to install docker on your system or follow the instruction below.
 
 Setup WAMP.NET
 1. Set up nginx, php and mysql
