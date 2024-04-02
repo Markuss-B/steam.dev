@@ -1,4 +1,4 @@
-![store_load](https://github.com/Markuss-B/steam.dev/assets/53609541/139bd4ae-bbb3-4cdb-b1b5-0a5f4a07f185)## About this project
+## About this project
 This project is part of my Web Technologies 2 course at University of Latvia. It's a simple videogame library management website. You can create a profile buy games and view them in your library.
 
 ## Functionality
